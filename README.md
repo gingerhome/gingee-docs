@@ -1,4 +1,4 @@
-#GingerJS App Server Docs
+# GingerJS App Server Docs
 
 **What is GingerJS?**
 
