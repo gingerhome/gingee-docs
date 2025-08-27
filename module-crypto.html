@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>crypto - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-dashboard-Dashboard.html">Dashboard</a><ul class='methods'><li data-type='method'><a href="module-dashboard-Dashboard.html#renderChart">renderChart</a></li><li data-type='method'><a href="module-dashboard-Dashboard.html#toBuffer">toBuffer</a></li><li data-type='method'><a href="module-dashboard-Dashboard.html#toDataURL">toDataURL</a></li></ul></li><li><a href="module-image-ImageProcessor.html">ImageProcessor</a><ul class='methods'><li data-type='method'><a href="module-image-ImageProcessor.html#blur">blur</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#composite">composite</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#flip">flip</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#flop">flop</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#format">format</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#greyscale">greyscale</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#resize">resize</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#rotate">rotate</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#sharpen">sharpen</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#toBuffer">toBuffer</a></li><li data-type='method'><a href="module-image-ImageProcessor.html#toFile">toFile</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-auth.html">auth</a></li><li><a href="module-cache.html">cache</a><ul class='methods'><li data-type='method'><a href="module-cache.html#.clear">clear</a></li><li data-type='method'><a href="module-cache.html#.del">del</a></li><li data-type='method'><a href="module-cache.html#.get">get</a></li><li data-type='method'><a href="module-cache.html#.set">set</a></li></ul></li><li><a href="module-chart.html">chart</a><ul class='methods'><li data-type='method'><a href="module-chart.html#.registerFont">registerFont</a></li><li data-type='method'><a href="module-chart.html#.runInGBox">runInGBox</a></li></ul></li><li><a href="module-crypto.html">crypto</a><ul class='methods'><li data-type='method'><a href="module-crypto.html#.CRC32">CRC32</a></li><li data-type='method'><a href="module-crypto.html#.MD5">MD5</a></li><li data-type='method'><a href="module-crypto.html#.SHA2">SHA2</a></li><li data-type='method'><a href="module-crypto.html#.SHA3">SHA3</a></li><li data-type='method'><a href="module-crypto.html#.decrypt">decrypt</a></li><li data-type='method'><a href="module-crypto.html#.encrypt">encrypt</a></li><li data-type='method'><a href="module-crypto.html#.generateSecureRandomString">generateSecureRandomString</a></li><li data-type='method'><a href="module-crypto.html#.hashPassword">hashPassword</a></li><li data-type='method'><a href="module-crypto.html#.hmacSha256Encrypt">hmacSha256Encrypt</a></li><li data-type='method'><a href="module-crypto.html#.hmacSha256Verify">hmacSha256Verify</a></li><li data-type='method'><a href="module-crypto.html#.verifyPassword">verifyPassword</a></li></ul></li><li><a href="module-dashboard.html">dashboard</a><ul class='methods'><li data-type='method'><a href="module-dashboard.html#.init">init</a></li></ul></li><li><a href="module-db.html">db</a><ul class='methods'><li data-type='method'><a href="module-db.html#.execute">execute</a></li><li data-type='method'><a href="module-db.html#.query">query</a></li><li data-type='method'><a href="module-db.html#.transaction">transaction</a></li></ul></li><li><a href="module-encode.html">encode</a></li><li><a href="module-formdata.html">formdata</a><ul class='methods'><li data-type='method'><a href="module-formdata.html#.create">create</a></li></ul></li><li><a href="module-fs.html">fs</a><ul class='methods'><li data-type='method'><a href="module-fs.html#.appendFile">appendFile</a></li><li data-type='method'><a href="module-fs.html#.appendFileSync">appendFileSync</a></li><li data-type='method'><a href="module-fs.html#.copyDir">copyDir</a></li><li data-type='method'><a href="module-fs.html#.copyDirSync">copyDirSync</a></li><li data-type='method'><a href="module-fs.html#.copyFile">copyFile</a></li><li data-type='method'><a href="module-fs.html#.copyFileSync">copyFileSync</a></li><li data-type='method'><a href="module-fs.html#.deleteFile">deleteFile</a></li><li data-type='method'><a href="module-fs.html#.deleteFileSync">deleteFileSync</a></li><li data-type='method'><a href="module-fs.html#.exists">exists</a></li><li data-type='method'><a href="module-fs.html#.existsSync">existsSync</a></li><li data-type='method'><a href="module-fs.html#.mkdir">mkdir</a></li><li data-type='method'><a href="module-fs.html#.mkdirSync">mkdirSync</a></li><li data-type='method'><a href="module-fs.html#.moveDir">moveDir</a></li><li data-type='method'><a href="module-fs.html#.moveDirSync">moveDirSync</a></li><li data-type='method'><a href="module-fs.html#.moveFile">moveFile</a></li><li data-type='method'><a href="module-fs.html#.moveFileSync">moveFileSync</a></li><li data-type='method'><a href="module-fs.html#.readFile">readFile</a></li><li data-type='method'><a href="module-fs.html#.readFileSync">readFileSync</a></li><li data-type='method'><a href="module-fs.html#.rmdir">rmdir</a></li><li data-type='method'><a href="module-fs.html#.rmdirSync">rmdirSync</a></li><li data-type='method'><a href="module-fs.html#.writeFile">writeFile</a></li><li data-type='method'><a href="module-fs.html#.writeFileSync">writeFileSync</a></li></ul></li><li><a href="module-html.html">html</a><ul class='methods'><li data-type='method'><a href="module-html.html#.fromFile">fromFile</a></li><li data-type='method'><a href="module-html.html#.fromFileSync">fromFileSync</a></li><li data-type='method'><a href="module-html.html#.fromString">fromString</a></li><li data-type='method'><a href="module-html.html#.fromUrl">fromUrl</a></li></ul></li><li><a href="module-httpclient.html">httpclient</a><ul class='methods'><li data-type='method'><a href="module-httpclient.html#.get">get</a></li><li data-type='method'><a href="module-httpclient.html#.post">post</a></li></ul></li><li><a href="module-image.html">image</a><ul class='methods'><li data-type='method'><a href="module-image.html#.loadFromBuffer">loadFromBuffer</a></li><li data-type='method'><a href="module-image.html#.loadFromFile">loadFromFile</a></li></ul></li><li><a href="module-pdf.html">pdf</a><ul class='methods'><li data-type='method'><a href="module-pdf.html#.create">create</a></li></ul></li><li><a href="module-platform.html">platform</a><ul class='methods'><li data-type='method'><a href="module-platform.html#.createAppDirectory">createAppDirectory</a></li><li data-type='method'><a href="module-platform.html#.deleteApp">deleteApp</a></li><li data-type='method'><a href="module-platform.html#.installApp">installApp</a></li><li data-type='method'><a href="module-platform.html#.installFromBackup">installFromBackup</a></li><li data-type='method'><a href="module-platform.html#.listApps">listApps</a></li><li data-type='method'><a href="module-platform.html#.listBackups">listBackups</a></li><li data-type='method'><a href="module-platform.html#.mockRollback">mockRollback</a></li><li data-type='method'><a href="module-platform.html#.mockUpgrade">mockUpgrade</a></li><li data-type='method'><a href="module-platform.html#.packageApp">packageApp</a></li><li data-type='method'><a href="module-platform.html#.readFile">readFile</a></li><li data-type='method'><a href="module-platform.html#.registerNewApp">registerNewApp</a></li><li data-type='method'><a href="module-platform.html#.reloadApp">reloadApp</a></li><li data-type='method'><a href="module-platform.html#.rollbackApp">rollbackApp</a></li><li data-type='method'><a href="module-platform.html#.unzipToApp">unzipToApp</a></li><li data-type='method'><a href="module-platform.html#.upgradeApp">upgradeApp</a></li><li data-type='method'><a href="module-platform.html#.writeFile">writeFile</a></li><li data-type='method'><a href="module-platform.html#.zipApp">zipApp</a></li><li data-type='method'><a href="module-platform.html#~analyzeAppBackup">analyzeAppBackup</a></li><li data-type='method'><a href="module-platform.html#~getAppPermissions">getAppPermissions</a></li><li data-type='method'><a href="module-platform.html#~removeAppPermissions">removeAppPermissions</a></li><li data-type='method'><a href="module-platform.html#~setAppPermissions">setAppPermissions</a></li></ul></li><li><a href="module-qrcode.html">qrcode</a><ul class='methods'><li data-type='method'><a href="module-qrcode.html#.barcode">barcode</a></li><li data-type='method'><a href="module-qrcode.html#.qrcode">qrcode</a></li></ul></li><li><a href="module-utils.html">utils</a></li><li><a href="module-uuid.html">uuid</a><ul class='methods'><li data-type='method'><a href="module-uuid.html#.v4">v4</a></li><li data-type='method'><a href="module-uuid.html#.validate">validate</a></li></ul></li><li><a href="module-zip.html">zip</a><ul class='methods'><li data-type='method'><a href="module-zip.html#.unzip">unzip</a></li><li data-type='method'><a href="module-zip.html#.zip">zip</a></li><li data-type='method'><a href="module-zip.html#.zipToFile">zipToFile</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="module-auth.jwt.html">jwt</a><ul class='methods'><li data-type='method'><a href="module-auth.jwt.html#.create">create</a></li><li data-type='method'><a href="module-auth.jwt.html#.verify">verify</a></li></ul></li><li><a href="module-encode.base58.html">base58</a><ul class='methods'><li data-type='method'><a href="module-encode.base58.html#.decode">decode</a></li><li data-type='method'><a href="module-encode.base58.html#.encode">encode</a></li></ul></li><li><a href="module-encode.base64.html">base64</a><ul class='methods'><li data-type='method'><a href="module-encode.base64.html#.decode">decode</a></li><li data-type='method'><a href="module-encode.base64.html#.decodeUrl">decodeUrl</a></li><li data-type='method'><a href="module-encode.base64.html#.encode">encode</a></li><li data-type='method'><a href="module-encode.base64.html#.encodeUrl">encodeUrl</a></li></ul></li><li><a href="module-encode.hex.html">hex</a><ul class='methods'><li data-type='method'><a href="module-encode.hex.html#.decode">decode</a></li><li data-type='method'><a href="module-encode.hex.html#.encode">encode</a></li></ul></li><li><a href="module-encode.html.html">html</a><ul class='methods'><li data-type='method'><a href="module-encode.html.html#.decode">decode</a></li><li data-type='method'><a href="module-encode.html.html#.encode">encode</a></li></ul></li><li><a href="module-encode.uri.html">uri</a><ul class='methods'><li data-type='method'><a href="module-encode.uri.html#.decode">decode</a></li><li data-type='method'><a href="module-encode.uri.html#.encode">encode</a></li></ul></li><li><a href="module-utils.misc.html">misc</a><ul class='methods'><li data-type='method'><a href="module-utils.misc.html#.clamp">clamp</a></li><li data-type='method'><a href="module-utils.misc.html#.groupBy">groupBy</a></li></ul></li><li><a href="module-utils.rnd.html">rnd</a><ul class='methods'><li data-type='method'><a href="module-utils.rnd.html#.bool">bool</a></li><li data-type='method'><a href="module-utils.rnd.html#.choice">choice</a></li><li data-type='method'><a href="module-utils.rnd.html#.color">color</a></li><li data-type='method'><a href="module-utils.rnd.html#.float">float</a></li><li data-type='method'><a href="module-utils.rnd.html#.floatInRange">floatInRange</a></li><li data-type='method'><a href="module-utils.rnd.html#.int">int</a></li><li data-type='method'><a href="module-utils.rnd.html#.intInRange">intInRange</a></li><li data-type='method'><a href="module-utils.rnd.html#.shuffle">shuffle</a></li><li data-type='method'><a href="module-utils.rnd.html#.string">string</a></li></ul></li><li><a href="module-utils.string.html">string</a><ul class='methods'><li data-type='method'><a href="module-utils.string.html#.capitalize">capitalize</a></li><li data-type='method'><a href="module-utils.string.html#.slugify">slugify</a></li><li data-type='method'><a href="module-utils.string.html#.stripHtml">stripHtml</a></li><li data-type='method'><a href="module-utils.string.html#.truncate">truncate</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">crypto</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description usertext">Provides cryptographic functions for hashing, encryption, and secure random string generation.</div>
+            
+
+            
+                
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Provides cryptographic functions for hashing, encryption, and secure random string generation.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".CRC32"><span class="type-signature type-signature-static">(static) </span>CRC32<span class="signature">(inputString)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Computes the CRC32 checksum for a string.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const checksum = crypto.CRC32("Hello, World!");console.log("CRC32 Checksum:", checksum);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>inputString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The string to process.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    The CRC32 checksum as an integer.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".MD5"><span class="type-signature type-signature-static">(static) </span>MD5<span class="signature">(inputString)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Computes the MD5 hash for a string.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const hash = crypto.MD5("Hello, World!");console.log("MD5 Hash:", hash);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>inputString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The string to process.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    The MD5 hash as a hex string.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".SHA2"><span class="type-signature type-signature-static">(static) </span>SHA2<span class="signature">(inputString)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Computes the SHA256 hash for a string. (SHA2 is a family, SHA256 is the most common)</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const hash = crypto.SHA2("Hello, World!");console.log("SHA256 Hash:", hash);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>inputString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The string to process.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    The SHA256 hash as a hex string.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".SHA3"><span class="type-signature type-signature-static">(static) </span>SHA3<span class="signature">(inputString)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Computes the SHA3-256 hash for a string.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const hash = crypto.SHA3("Hello, World!");console.log("SHA3-256 Hash:", hash);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>inputString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The string to process.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    The SHA3-256 hash as a hex string.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".decrypt"><span class="type-signature type-signature-static">(static) </span>decrypt<span class="signature">(encryptedPackage, secret)</span><span class="type-signature"> &rarr; {string|null}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Decrypts text that was encrypted with the encrypt() function.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const decrypted = crypto.decrypt("iv:authtag:encryptedtext", "my-secret");console.log("Decrypted Text:", decrypted);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>encryptedPackage</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The "iv:authtag:encryptedtext" string.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The secret key used for encryption.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-throws">Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc usertext">
+        If the decryption fails due to an invalid format or other issues.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl class="param-type">
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    The original plaintext or null if decryption fails.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".encrypt"><span class="type-signature type-signature-static">(static) </span>encrypt<span class="signature">(textToEncrypt, secret)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Encrypts text using AES-256-GCM.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const encrypted = crypto.encrypt("Hello, World!", "my-secret");console.log("Encrypted Text:", encrypted);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>textToEncrypt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The plaintext string.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The secret key to use for encryption.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    A combined string "iv:authtag:encryptedtext" in hex format.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".generateSecureRandomString"><span class="type-signature type-signature-static">(static) </span>generateSecureRandomString<span class="signature">(length)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Generates a cryptographically secure random string.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const randomString = crypto.generateSecureRandomString(32);console.log("Random String:", randomString);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The desired length of the final string.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    A random, URL-safe string.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".hashPassword"><span class="type-signature type-signature-static">(static) </span>hashPassword<span class="signature">(plainTextPassword)</span><span class="type-signature"> &rarr; {Promise.&lt;string>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Securely hashes a password using Argon2.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const hash = await crypto.hashPassword("mySecurePassword");console.log("Hashed Password:", hash);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>plainTextPassword</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The user's password.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    A promise that resolves to the full hash string.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;string></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".hmacSha256Encrypt"><span class="type-signature type-signature-static">(static) </span>hmacSha256Encrypt<span class="signature">(inputString, secret)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Encrypts (signs) a string using HMAC-SHA256.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const signature = crypto.hmacSha256Encrypt("Hello, World!", "my-secret");console.log("HMAC-SHA256 Signature:", signature);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>inputString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The string to encrypt/sign.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The secret key.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    The HMAC signature as a hex string.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".hmacSha256Verify"><span class="type-signature type-signature-static">(static) </span>hmacSha256Verify<span class="signature">(encryptedString, originalString, secret)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Verifies an HMAC-SHA256 signature.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const isValid = crypto.hmacSha256Verify(signature, "Hello, World!", "my-secret");console.log("Is the signature valid? - ", isValid);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>encryptedString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The signature (hex string) to verify.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>originalString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The original, unencrypted string.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The secret key used for signing.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    True if the signature is valid, false otherwise.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".verifyPassword"><span class="type-signature type-signature-static">(static) </span>verifyPassword<span class="signature">(plainTextPassword, hash)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Verifies a plaintext password against an Argon2 hash.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const isValid = await crypto.verifyPassword("mySecurePassword", hash);console.log("Is the password valid? - ", isValid);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>plainTextPassword</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The password to check.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>hash</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The hash string from the database.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    A promise that resolves to true if they match, false otherwise.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;boolean></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Tue Aug 26 2025 23:15:43 GMT+0530 (India Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

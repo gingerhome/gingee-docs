@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GingerJS - An AI Co-Authored Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1><img class="logo" src="../../../images/ginger.png" alt="Ginger"> <span>GingerJS Development Transcript</span></h1>
+        <p>Phase 2</p>
+        <p id="total-tokens"></p>
+    </header>
+
+    <div id="chat-container" class="chat-container">
+        <!-- Chat messages will be dynamically inserted here by JavaScript -->
+		<p id='loading-msg'><b>Please wait for the chat transcript to load...<b></p>
+    </div>
+
+    <!-- Marked.js library for rendering Markdown from the transcript -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Your transcript data -->
+    <script src="transcript.js"></script>
+
+    <!-- The script to build the page -->
+    <script src="../script.js"></script>
+
+</body>
+
+</html>
