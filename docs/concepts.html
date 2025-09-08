@@ -235,8 +235,33 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       </li>
     </ul>
     <p><strong>IMPORTANT</strong>: All GingerJS modules are required by name (eg. 'fs'). Some of these names intentionally are similar to NodeJS built-in modules for developer familiarity only. GingerJS by default locks out access for all NodeJS built-in modules and third party modules with the exception of 'querystring', 'url' and 'mime-types'. A whitelist of built-in and third party modules can be configured in ginger.json but it is not recommended to do so to preserve the sandboxed nature of GingerJS apps.</p>
-    <h2 id="6-configuration-gingerjson--appjson"><a class="anchor" aria-hidden="true" tabindex="-1" href="#6-configuration-gingerjson--appjson"><span class="octicon octicon-link"></span></a>6. Configuration (<code>ginger.json</code> &#x26; <code>app.json</code>)</h2>
-    <p>Configuration is simple and declarative.</p>
+    <h2 id="6-configuration-gingerjson-appjson-etc"><a class="anchor" aria-hidden="true" tabindex="-1" href="#6-configuration-gingerjson-appjson-etc"><span class="octicon octicon-link"></span></a>6. Configuration (<code>ginger.json</code>, <code>app.json</code>, etc.)</h2>
+    <p>Configuration in GingerJS is declarative and split across several manifest files, each with a clear purpose. This separation keeps server-level concerns apart from application-specific ones.</p>
+    <ul>
+      <li><strong><code>ginger.json</code>:</strong> The master file for the entire server instance. It controls global settings like server ports, the central caching provider (Memory or Redis), and logging policies.</li>
+      <li><strong><code>app.json</code>:</strong> The manifest for a single application, located in its <code>box</code> folder. It defines the app's name, database connections, startup scripts, and middleware.</li>
+      <li><strong><code>pmft.json</code>:</strong> The security manifest for a distributable application. Here, a developer declares the permissions (e.g., <code>db</code>, <code>fs</code>) the app requires to function. The CLI reads this file to get consent from an administrator during installation.</li>
+      <li><strong><code>routes.json</code>:</strong> An optional manifest for enabling advanced, dynamic URL routing for an application, perfect for building clean RESTful APIs.</li>
+    </ul>
+    <p>For a full breakdown, see the <strong><a href="./server-config.md">Server Config</a></strong> and <strong><a href="./app-structure.md">App Structure</a></strong> reference guides.</p>
+    <h2 id="7-the-command-line-interface-cli"><a class="anchor" aria-hidden="true" tabindex="-1" href="#7-the-command-line-interface-cli"><span class="octicon octicon-link"></span></a>7. The Command Line Interface (CLI)</h2>
+    <p>The <code>gingerjs-cli</code> is an essential, all-in-one tool for the entire application lifecycle. It is used for both local development and production server management. Its key capabilities include:</p>
+    <ul>
+      <li><strong>Project Initialization:</strong> Scaffolding a complete, new GingerJS project with <code>gingerjs-cli init</code>.</li>
+      <li><strong>Local Scaffolding:</strong> Quickly creating new apps and server scripts with <code>add-app</code> and <code>add-script</code>.</li>
+      <li><strong>Application Lifecycle:</strong> Interactively installing (<code>install-app</code>), upgrading (<code>upgrade-app</code>), rolling back (<code>rollback-app</code>), and deleting applications on a remote server.</li>
+      <li><strong>App Store:</strong> Discovering and installing apps from a decentralized store with <code>list-store-apps</code> and <code>install-store-app</code>.</li>
+    </ul>
+    <p>For detailed usage of all commands, see the <strong>CLI Command Reference</strong> <a href="./gingerjs-cli.md">MD</a> / <a href="./gingerjs-cli.html">HTML</a>.</p>
+    <h2 id="8-a-genai-native-platform"><a class="anchor" aria-hidden="true" tabindex="-1" href="#8-a-genai-native-platform"><span class="octicon octicon-link"></span></a>8. A GenAI-Native Platform</h2>
+    <p>GingerJS is unique in its origin and development philosophy. It was co-authored by a human architect and a Generative AI partner, embracing a workflow we call "Dialog-Driven Development." High-level goals are discussed and refined in a collaborative dialogue, and the AI generates the implementation, which is then tested and validated.</p>
+    <p>You are encouraged to adopt this same powerful workflow. The key is to provide the AI with a "knowledge bundle" of the platform's architecture.</p>
+    <p><strong>How to Start an AI-Assisted App Development Session:</strong></p>
+    <ol>
+      <li><strong>Get the Context:</strong> Locate the <code>ai-context.md</code> file in the project's <code>docs/ai-context</code> directory.</li>
+      <li><strong>Prime the AI:</strong> Begin a new session with a capable AI (like Google Gemini) by providing the entire contents of the context file with a simple instruction: "You are an expert developer for a platform called GingerJS. Analyze the following documentation and API reference and be prepared to help me build an application."</li>
+      <li><strong>Give it a Task:</strong> Once the AI has processed the context, you can give it high-level, goal-oriented tasks, and it will generate high-quality, idiomatic GingerJS code.</li>
+    </ol>
     <script>/*! @uiw/copy-to-clipboard v1.0.12 | MIT (c) 2021 Kenny Wang | https://github.com/uiwjs/copy-to-clipboard.git */
 !function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).copyTextToClipboard=t()}(this,(function(){"use strict";return function(e,t){const o=document.createElement("textarea");o.value=e,o.setAttribute("readonly",""),o.style={position:"absolute",left:"-9999px"},document.body.appendChild(o);const n=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);o.select();let c=!1;try{c=!!document.execCommand("copy")}catch(e){c=!1}document.body.removeChild(o),n&&document.getSelection&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(n)),t&&t(c)}}));
 

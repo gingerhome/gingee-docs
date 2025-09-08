@@ -105,19 +105,19 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <p>This is a living document and is subject to change based on community feedback and evolving technological landscapes. We welcome discussion and contributions on all of these items!</p>
     <h2 id="phase-1-solidify-the-core--developer-experience-near-term"><a class="anchor" aria-hidden="true" tabindex="-1" href="#phase-1-solidify-the-core--developer-experience-near-term"><span class="octicon octicon-link"></span></a>Phase 1: Solidify the Core &#x26; Developer Experience (Near-Term)</h2>
     <p>This phase is focused on polishing the existing platform and delivering on our "instant time to joy" promise by building out the tools that make GingerJS incredibly easy to adopt and use. [COMPLETED]</p>
-    <ul>
-      <li><strong>📚 Comprehensive "Cookbook" and Tutorials</strong>
-        <ul>
-          <li><strong>Goal:</strong> Make learning GingerJS effortless and practical.</li>
-          <li><strong>Features:</strong> Create a dedicated <code>examples</code> repository with 10+ complete, standalone applications that solve common problems (To-Do List API, Image Resizing Service, JWT Auth Server, SPA Hosting, etc.).</li>
-        </ul>
-      </li>
-    </ul>
     <h2 id="phase-2-expand-platform-capabilities-mid-term"><a class="anchor" aria-hidden="true" tabindex="-1" href="#phase-2-expand-platform-capabilities-mid-term"><span class="octicon octicon-link"></span></a>Phase 2: Expand Platform Capabilities (Mid-Term)</h2>
-    <p>This phase is focused on adding major new modules that unlock entirely new categories of applications that can be built on GingerJS.</p>
+    <p>This phase is focused on adding major new modules that unlock entirely new categories of applications that can be built on GingerJS. [INPROGRESS]</p>
     <ul>
       <li>
-        <p><strong>💬 Real-Time Communication (<code>websockets</code> Module)</strong></p>
+        <p><strong>Complete SPA hosting support</strong></p>
+        <ul>
+          <li><strong>Goal:</strong> Add first-class support for SPA based applications.</li>
+          <li><strong>Use Cases:</strong> Modern JS framework based applications such as React, Vue, Angular etc.</li>
+          <li><strong>Implementation:</strong> TBD.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Real-Time Communication (<code>websockets</code> Module)</strong></p>
         <ul>
           <li><strong>Goal:</strong> Add first-class support for real-time, bidirectional communication.</li>
           <li><strong>Use Cases:</strong> Live chat applications, real-time notifications, collaborative editing tools, and live data dashboards.</li>
@@ -125,7 +125,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </ul>
       </li>
       <li>
-        <p><strong>🕒 Job Queues &#x26; Background Processing (<code>queue</code> Module)</strong></p>
+        <p><strong>Job Queues &#x26; Background Processing (<code>queue</code> Module)</strong></p>
         <ul>
           <li><strong>Goal:</strong> Enable applications to offload long-running or deferrable tasks to a background worker process.</li>
           <li><strong>Use Cases:</strong> Sending welcome emails, processing video uploads, generating complex reports, or calling slow third-party APIs without blocking the main request.</li>
@@ -133,7 +133,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </ul>
       </li>
       <li>
-        <p><strong>🧩 Third-Party Service Adapters</strong></p>
+        <p><strong>Third-Party Service Adapters</strong></p>
         <ul>
           <li><strong>Goal:</strong> Transform GingerJS into a true integration platform by providing adapters for best-in-class third-party services.</li>
           <li><strong>Modules:</strong>
@@ -146,32 +146,32 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </ul>
       </li>
       <li>
-        <p><strong>🔐 Social Logins (OAuth 2.0)</strong></p>
+        <p><strong>Social Logins (OAuth 2.0)</strong></p>
         <ul>
           <li><strong>Goal:</strong> Complete the <code>auth</code> module by adding support for "Login with Google/Microsoft/GitHub," etc.</li>
           <li><strong>Implementation:</strong> Integrate <strong>Passport.js</strong> and its rich ecosystem of strategies into the <code>auth</code> module, with configuration managed cleanly in <code>app.json</code>.</li>
         </ul>
       </li>
     </ul>
-    <h2 id="phase-3-production-at-scale-long-term-vision"><a class="anchor" aria-hidden="true" tabindex="-1" href="#phase-3-production-at-scale-long-term-vision"><span class="octicon octicon-link"></span></a>Phase 3: Production at Scale (Long-Term Vision)</h2>
+    <h2 id="phase-3-production-at-scale-long-term"><a class="anchor" aria-hidden="true" tabindex="-1" href="#phase-3-production-at-scale-long-term"><span class="octicon octicon-link"></span></a>Phase 3: Production at Scale (Long-Term)</h2>
     <p>This phase is focused on adding features essential for running massive, high-traffic, enterprise-grade applications.</p>
     <ul>
       <li>
-        <p><strong>🌐 Clustering &#x26; Horizontal Scaling</strong></p>
+        <p><strong>Clustering &#x26; Horizontal Scaling</strong></p>
         <ul>
           <li><strong>Goal:</strong> Allow a single GingerJS instance to run on multiple CPU cores and scale across a fleet of machines.</li>
           <li><strong>Implementation:</strong> Leverage Node.js's <code>cluster</code> module and enhance core services (like the app registry and caches) to work in a distributed environment, likely with Redis.</li>
         </ul>
       </li>
       <li>
-        <p><strong>📈 Metrics &#x26; Monitoring</strong></p>
+        <p><strong>Metrics &#x26; Monitoring</strong></p>
         <ul>
           <li><strong>Goal:</strong> Expose internal server metrics for observability and alerting.</li>
           <li><strong>Implementation:</strong> Add a standard <code>/metrics</code> endpoint that exposes data in the <strong>Prometheus</strong> format for easy integration with tools like Grafana.</li>
         </ul>
       </li>
       <li>
-        <p><strong>🔌 Community Plugin System</strong></p>
+        <p><strong>Community Plugin System</strong></p>
         <ul>
           <li><strong>Goal:</strong> Allow the community to build, publish, and share their own GingerJS app modules.</li>
           <li><strong>Implementation:</strong> Formalize the module system to allow apps to specify third-party modules from NPM in their <code>app.json</code>, with careful consideration for security and sandboxing.</li>
