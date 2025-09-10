@@ -8,4 +8,4 @@ Gingee is a secure, batteries-included Node.js application server designed to dr
 
 - [Home](https://github.com/gingerhome/gingee)
 - [Docs](https://gingerhome.github.io/gingee-docs/)
-- [Examples](https://github.com/gingerhome/gingee-examples/examples.md)
+- [Examples](https://github.com/gingerhome/gingee-examples)
