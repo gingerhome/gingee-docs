@@ -111,19 +111,15 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       </li>
       <li>
         <p><strong>Configuration File:</strong> The credentials are saved in <code>web/glade/box/app.json</code>:</p>
-        <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token comment">// web/glade/box/app.json</span>
-</span><span class="code-line line-number" line="2"><span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="3">  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"glade"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="4">  <span class="token comment">// ...</span>
-</span><span class="code-line line-number" line="5">  <span class="token property">"env"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="6">    <span class="token property">"ADMIN_USERNAME"</span><span class="token operator">:</span> <span class="token string">"admin"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="7">    <span class="token property">"ADMIN_PASSWORD_HASH"</span><span class="token operator">:</span> <span class="token string">"$argon2id$v=19$m=..."</span> 
-</span><span class="code-line line-number" line="8">  <span class="token punctuation">}</span>
-</span><span class="code-line line-number" line="9"><span class="token punctuation">}</span>
-</span></code><div onclick="copied(this)" data-code="// web/glade/box/app.json
-{
+        <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="2">  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"glade"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"env"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="4">    <span class="token property">"ADMIN_USERNAME"</span><span class="token operator">:</span> <span class="token string">"admin"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="5">    <span class="token property">"ADMIN_PASSWORD_HASH"</span><span class="token operator">:</span> <span class="token string">"$argon2id$v=19$m=..."</span> 
+</span><span class="code-line line-number" line="6">  <span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="7"><span class="token punctuation">}</span>
+</span></code><div onclick="copied(this)" data-code="{
   &#x22;name&#x22;: &#x22;glade&#x22;,
-  // ...
   &#x22;env&#x22;: {
     &#x22;ADMIN_USERNAME&#x22;: &#x22;admin&#x22;,
     &#x22;ADMIN_PASSWORD_HASH&#x22;: &#x22;$argon2id$v=19$m=...&#x22; 
