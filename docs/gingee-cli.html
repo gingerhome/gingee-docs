@@ -136,6 +136,8 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <p><strong>Wizard Prompts:</strong></p>
     <ul>
       <li><code>What type of app is this?</code> Choose between <code>MPA</code> (Multi-Page App, default) or <code>SPA</code> (Single Page Application, for React/Vue/Angular).</li>
+      <li>If <code>MPA</code> is chosen, it scaffolds a complete "hello world" application with HTML, CSS, and JS.</li>
+      <li>If <code>SPA</code> is chosen, it scaffolds a minimal backend structure (<code>box/</code>, <code>app.json</code>) and provides clear instructions for you to initialize your chosen frontend framework inside the app's directory.</li>
       <li><code>Would you like to configure a database connection?</code> If yes, it will guide you through setting up the <code>db</code> block in the new app's <code>app.json</code>.</li>
       <li><code>Generate a JWT secret for this app?</code> If yes, it will automatically generate a secure secret and add it to <code>app.json</code>.</li>
     </ul>

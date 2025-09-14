@@ -120,7 +120,11 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     </ul>
     <h2 id="2-the-flexible-routing-engine"><a class="anchor" aria-hidden="true" tabindex="-1" href="#2-the-flexible-routing-engine"><span class="octicon octicon-link"></span></a>2. The Flexible Routing Engine</h2>
     <p>Gingee features a powerful and flexible routing engine that automatically maps incoming URL requests to your server scripts or static files. It supports two distinct modes to fit your application's needs. The two modes can also be used together.</p>
-    <p><strong>NOTE:</strong> In both modes, the url path should <strong>NOT</strong> have the /box/ explicitly mentioned. Gingee will handle it as required.</p>
+    <p><strong>NOTE:</strong></p>
+    <ul>
+      <li>In both modes, the url path should <strong>NOT</strong> have the /box/ explicitly mentioned. Gingee will handle it as required.</li>
+      <li>For Single Page Applications (SPA), the engine is also configured to serve your app's <code>index.html</code> for any request that doesn't match a specific API route or static file. This enables client-side routing libraries like React Router to function seamlessly.</li>
+    </ul>
     <h3 id="mode-1-file-based-routing-zero-config-default"><a class="anchor" aria-hidden="true" tabindex="-1" href="#mode-1-file-based-routing-zero-config-default"><span class="octicon octicon-link"></span></a>Mode 1: File-Based Routing (Zero-Config Default)</h3>
     <p>For simplicity and rapid development, this is the default behavior. You don't need to configure anything—just create files.</p>
     <ul>

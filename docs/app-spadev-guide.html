@@ -100,329 +100,222 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     .wrapper { cursor: pointer; user-select: none; position: relative; }
     .wrapper > span + span { margin-left: .4rem; }
     `;s.appendChild(a)}i(t,e){this.dispatchEvent(new CustomEvent(t,{bubbles:true,composed:true,detail:e}))}}customElements.define("dark-mode",a);</script><div style="max-width: 960px; margin: 0 auto 60px auto; padding: 8px;max-width: 960px;" class="markdown-style">
-    <h1 id="anatomy-of-a-gingee-app"><a class="anchor" aria-hidden="true" tabindex="-1" href="#anatomy-of-a-gingee-app"><span class="octicon octicon-link"></span></a>Anatomy of a Gingee App</h1>
-    <p>Every application built on Gingee follows a simple and consistent structure. This guide breaks down that structure, explains the critical role of the <code>box</code> folder, and provides a comprehensive reference for all the settings available in the <code>app.json</code> and <code>routes.json</code> configuration file.</p>
-    <h2 id="app-folder-structure"><a class="anchor" aria-hidden="true" tabindex="-1" href="#app-folder-structure"><span class="octicon octicon-link"></span></a>App Folder Structure</h2>
-    <p>Every first-level directory inside your server's <code>web</code> root is considered a distinct <strong>App</strong>. For an application named <code>my_app</code>, the structure looks like this:</p>
-    <pre><code class="code-highlight"><span class="code-line line-number" line="1">web/
-</span><span class="code-line line-number" line="2">└── my_app/
-</span><span class="code-line line-number" line="3">    ├── box/
-</span><span class="code-line line-number" line="4">    ├── css/
-</span><span class="code-line line-number" line="5">    ├── images/
-</span><span class="code-line line-number" line="6">    ├── scripts/
-</span><span class="code-line line-number" line="7">    └── index.html
-</span></code><div onclick="copied(this)" data-code="web/
-└── my_app/
-    ├── box/
-    ├── css/
-    ├── images/
-    ├── scripts/
-    └── index.html
+    <h1 id="gingee-the-modern-spa-developers-guide"><a class="anchor" aria-hidden="true" tabindex="-1" href="#gingee-the-modern-spa-developers-guide"><span class="octicon octicon-link"></span></a>Gingee: The Modern SPA Developer's Guide</h1>
+    <p>Welcome! This guide provides a complete walkthrough for developing, testing, building, and distributing a modern Single Page Application (SPA) using frameworks like React, Vue, or Angular on the Gingee platform.</p>
+    <p>We will follow Gingee's "Instant Time to Joy" philosophy by creating a seamless development environment that combines the power of a secure Gingee backend with the rich tooling of the modern frontend ecosystem.</p>
+    <h3 id="chapter-1-core-concepts-for-spa-hosting"><a class="anchor" aria-hidden="true" tabindex="-1" href="#chapter-1-core-concepts-for-spa-hosting"><span class="octicon octicon-link"></span></a>Chapter 1: Core Concepts for SPA Hosting</h3>
+    <p>Gingee achieves first-class SPA support through two core mechanisms:</p>
+    <ol>
+      <li>
+        <p><strong>Development Server Proxy:</strong> In development mode, the Gingee server acts as the single point of entry. It intelligently serves your backend API from the <code>box</code> folder while automatically proxying all other requests (for your UI, assets, etc.) to your frontend's native hot-reloading dev server (like Vite or the Angular CLI). This creates a unified, CORS-free environment with a single command.</p>
+      </li>
+      <li>
+        <p><strong>Production Fallback Routing:</strong> In production mode, the proxy is disabled. Gingee serves your compiled frontend assets from a build directory (e.g., <code>dist/</code>). Any request that does not match a backend API route or a specific static asset is automatically "forwarded" to serve your SPA's main <code>index.html</code> file. This allows client-side routing libraries like React Router to take control of the URL and render the correct view.</p>
+      </li>
+    </ol>
+    <h3 id="chapter-2-scaffolding-your-spa-backend"><a class="anchor" aria-hidden="true" tabindex="-1" href="#chapter-2-scaffolding-your-spa-backend"><span class="octicon octicon-link"></span></a>Chapter 2: Scaffolding Your SPA Backend</h3>
+    <p>The first step is to create a Gingee application that is pre-configured for SPA hosting.</p>
+    <p><strong>1. Run the <code>add-app</code> Command</strong></p>
+    <p>From the root of your Gingee project, run the following command:</p>
+    <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1">gingee-cli add-app my-spa
+</span></code><div onclick="copied(this)" data-code="gingee-cli add-app my-spa
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
-    <ul>
-      <li>
-        <p><strong><code>my_app/</code></strong>: The root folder for the application. The name of this folder becomes the app's unique ID and the first segment of its URL (e.g., <code>http://localhost/my_app/...</code>).</p>
-      </li>
-      <li>
-        <p><strong><code>css/</code>, <code>images/</code>, <code>scripts/</code>, etc.:</strong> These are <strong>public</strong> directories. Any file placed here can be accessed directly by its URL. Gingee's static file server will serve these assets. For example, a file at <code>web/my_app/css/style.css</code> is available at <code>/my_app/css/style.css</code>.</p>
-      </li>
-      <li>
-        <p><strong><code>index.html</code></strong>: If a user navigates to the app's root URL (<code>/my_app</code>), this file will be served by default (if the app is not an SPA).</p>
-      </li>
-    </ul>
-    <h3 id="the-importance-of-the-box-folder"><a class="anchor" aria-hidden="true" tabindex="-1" href="#the-importance-of-the-box-folder"><span class="octicon octicon-link"></span></a>The Importance of the <code>box</code> Folder</h3>
-    <p>The <code>box</code> folder is the <strong>private, secure core</strong> of your application. It contains all your backend logic, configuration, and private data.</p>
-    <ul>
-      <li>
-        <p><strong>Security:</strong> The <code>box</code> folder is <strong>always protected</strong>. No file inside the <code>box</code> can ever be accessed directly from a URL. A request to <code>/my_app/box/app.json</code>, for example, will be blocked with a <code>403 Access Denied</code> error. This is a fundamental security guarantee of the Gingee platform.</p>
-      </li>
-      <li>
-        <p><strong>Server Scripts:</strong> All your backend API endpoints are JavaScript files that live inside the <code>box</code>. A request to <code>/my_app/api/users</code> is mapped to the file at <code>web/my_app/box/api/users.js</code>.</p>
-      </li>
-      <li>
-        <p><strong>Configuration:</strong> All app-specific configuration, including the crucial <code>app.json</code> file, resides in the <code>box</code>.</p>
-      </li>
-      <li>
-        <p><strong>Private Data:</strong> If your application uses a file-based database like SQLite, its database file should be stored in a subdirectory within the <code>box</code> (e.g., <code>box/data/app.db</code>) to ensure it is protected from direct web access.</p>
-      </li>
-    </ul>
-    <hr>
-    <h2 id="the-appjson-file"><a class="anchor" aria-hidden="true" tabindex="-1" href="#the-appjson-file"><span class="octicon octicon-link"></span></a>The <code>app.json</code> File:</h2>
-    <p>The <code>app.json</code> file, located at <code>web/my_app/box/app.json</code>, is the central configuration file for your application. It tells the Gingee server how to handle the app, what resources it needs, and how it should behave.</p>
-    <p>Here is a comprehensive breakdown of all available properties.</p>
+    <p><strong>2. Select the SPA Type</strong></p>
+    <p>In the interactive wizard, choose the <code>SPA</code> option:</p>
+    <pre><code class="code-highlight"><span class="code-line line-number" line="1">? What type of app is this? (Use arrow keys)
+</span><span class="code-line line-number" line="2">  MPA (Multi-Page App, classic Gingee for static sites or server-side logic)
+</span><span class="code-line line-number" line="3">❯ SPA (Single Page App, for modern frontends like React, Vue, Angular)
+</span></code><div onclick="copied(this)" data-code="? What type of app is this? (Use arrow keys)
+  MPA (Multi-Page App, classic Gingee for static sites or server-side logic)
+❯ SPA (Single Page App, for modern frontends like React, Vue, Angular)
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+    <p>The CLI will create a minimal backend structure at <code>web/my-spa/</code>, which includes the secure <code>box</code> folder, a sample API endpoint, and, most importantly, a pre-configured <code>app.json</code>.</p>
+    <p><strong>3. Understand the <code>app.json</code> Configuration</strong></p>
+    <p>The generated <code>web/my-spa/box/app.json</code> is the key to enabling SPA mode:</p>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="2">  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"My Awesome App"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="3">  <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"This is a demonstration of all app.json settings."</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="4">  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.2.0"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="5">  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"MPA"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="6">  <span class="token property">"mode"</span><span class="token operator">:</span> <span class="token string">"production"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="7">  <span class="token property">"spa"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="8">    <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="9">    <span class="token property">"dev_server_proxy"</span><span class="token operator">:</span> <span class="token string">"http://localhost:5173"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="10">    <span class="token property">"build_path"</span><span class="token operator">:</span> <span class="token string">"./dist"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="11">    <span class="token property">"fallback_path"</span><span class="token operator">:</span> <span class="token string">"index.html"</span>
-</span><span class="code-line line-number" line="12">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="13">  <span class="token property">"db"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="14">  <span class="token property">"startup_scripts"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="15">  <span class="token property">"default_include"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="16">  <span class="token property">"env"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="17">  <span class="token property">"jwt_secret"</span><span class="token operator">:</span> <span class="token string">"a-very-strong-and-unique-secret-key"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="18">  <span class="token property">"cache"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="19">    <span class="token property">"client"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="20">      <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="21">      <span class="token property">"no_cache_regex"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"/api/realtime"</span><span class="token punctuation">]</span>
-</span><span class="code-line line-number" line="22">    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="23">    <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="24">      <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="25">      <span class="token property">"no_cache_regex"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"/api/dynamic-script.js"</span><span class="token punctuation">]</span>
-</span><span class="code-line line-number" line="26">    <span class="token punctuation">}</span>
-</span><span class="code-line line-number" line="27">  <span class="token punctuation">}</span>
-</span><span class="code-line line-number" line="28"><span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="2">  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"my-spa"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"1.0.0"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="4">  <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"SPA"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="5">  <span class="token property">"mode"</span><span class="token operator">:</span> <span class="token string">"development"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="6">  <span class="token property">"spa"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="7">    <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="8">    <span class="token property">"dev_server_proxy"</span><span class="token operator">:</span> <span class="token string">"http://localhost:5173"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="9">    <span class="token property">"build_path"</span><span class="token operator">:</span> <span class="token string">"./dist"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="10">    <span class="token property">"fallback_path"</span><span class="token operator">:</span> <span class="token string">"index.html"</span>
+</span><span class="code-line line-number" line="11">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="12">  <span class="token property">"db"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="13"><span class="token punctuation">}</span>
 </span></code><div onclick="copied(this)" data-code="{
-  &#x22;name&#x22;: &#x22;My Awesome App&#x22;,
-  &#x22;description&#x22;: &#x22;This is a demonstration of all app.json settings.&#x22;,
-  &#x22;version&#x22;: &#x22;1.2.0&#x22;,
-  &#x22;type&#x22;: &#x22;MPA&#x22;,
-  &#x22;mode&#x22;: &#x22;production&#x22;,
+  &#x22;name&#x22;: &#x22;my-spa&#x22;,
+  &#x22;version&#x22;: &#x22;1.0.0&#x22;,
+  &#x22;type&#x22;: &#x22;SPA&#x22;,
+  &#x22;mode&#x22;: &#x22;development&#x22;,
   &#x22;spa&#x22;: {
-    &#x22;enabled&#x22;: false,
+    &#x22;enabled&#x22;: true,
     &#x22;dev_server_proxy&#x22;: &#x22;http://localhost:5173&#x22;,
     &#x22;build_path&#x22;: &#x22;./dist&#x22;,
     &#x22;fallback_path&#x22;: &#x22;index.html&#x22;
   },
-  &#x22;db&#x22;: [],
-  &#x22;startup_scripts&#x22;: [],
-  &#x22;default_include&#x22;: [],
-  &#x22;env&#x22;: {},
-  &#x22;jwt_secret&#x22;: &#x22;a-very-strong-and-unique-secret-key&#x22;,
-  &#x22;cache&#x22;: {
-    &#x22;client&#x22;: {
-      &#x22;enabled&#x22;: true,
-      &#x22;no_cache_regex&#x22;: [&#x22;/api/realtime&#x22;]
-    },
-    &#x22;server&#x22;: {
-      &#x22;enabled&#x22;: true,
-      &#x22;no_cache_regex&#x22;: [&#x22;/api/dynamic-script.js&#x22;]
-    }
+  &#x22;db&#x22;: []
+}
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+    <ul>
+      <li><code>"type": "SPA"</code>: Tells the Gingee engine to use the SPA routing logic.</li>
+      <li><code>"mode": "development"</code>: <strong>Crucial for development.</strong> This activates the dev server proxy. Switch this to <code>"production"</code> when you are ready to build and deploy.</li>
+      <li><code>"spa.dev_server_proxy"</code>: The URL of your frontend's dev server. You may need to change the port to match your tooling (e.g., <code>http://localhost:4200</code> for Angular).</li>
+      <li><code>"spa.build_path"</code>: The path to your compiled frontend assets, relative to the app's root (<code>web/my-spa/</code>). <strong><code>./dist</code></strong> is a common default.</li>
+      <li><code>"spa.fallback_path"</code>: The entry point file for your SPA, located inside the <code>build_path</code>.</li>
+    </ul>
+    <h3 id="chapter-3-setting-up-your-frontend"><a class="anchor" aria-hidden="true" tabindex="-1" href="#chapter-3-setting-up-your-frontend"><span class="octicon octicon-link"></span></a>Chapter 3: Setting Up Your Frontend</h3>
+    <p>Gingee is framework-agnostic. You can now use the official CLI for your chosen framework to initialize your project <em>inside</em> the <code>web/my-spa/</code> directory.</p>
+    <p><strong>Example using Vite + React + TypeScript:</strong></p>
+    <ol>
+      <li>
+        <p><strong>Navigate into your app's directory:</strong></p>
+        <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1"><span class="token builtin class-name">cd</span> web/my-spa
+</span></code><div onclick="copied(this)" data-code="cd web/my-spa
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+      </li>
+      <li>
+        <p><strong>Initialize the Vite project in the current folder:</strong></p>
+        <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1"><span class="token comment"># The '.' tells Vite to use the current directory</span>
+</span><span class="code-line line-number" line="2"><span class="token function">npm</span> create vite@latest
+</span></code><div onclick="copied(this)" data-code="# The &#x27;.&#x27; tells Vite to use the current directory
+npm create vite@latest
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+      </li>
+      <li>
+        <p><strong>Install frontend dependencies:</strong></p>
+        <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1"><span class="token function">npm</span> <span class="token function">install</span>
+</span></code><div onclick="copied(this)" data-code="npm install
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+      </li>
+      <li>
+        <p>
+          <strong>Configure the <code>base</code> Path (CRITICAL STEP)</strong>
+          You <strong>must</strong> tell your frontend build tool that the application will be served from a subpath. For Vite, you do this by editing <code>vite.config.js</code>.
+        </p>
+        <pre class="language-javascript"><code class="language-javascript code-highlight"><span class="code-line line-number" line="1"><span class="token comment">// File: web/my-spa/vite.config.js</span>
+</span><span class="code-line line-number" line="2"><span class="token keyword module">import</span> <span class="token imports"><span class="token punctuation">{</span> defineConfig <span class="token punctuation">}</span></span> <span class="token keyword module">from</span> <span class="token string">'vite'</span>
+</span><span class="code-line line-number" line="3"><span class="token keyword module">import</span> <span class="token imports">react</span> <span class="token keyword module">from</span> <span class="token string">'@vitejs/plugin-react'</span>
+</span><span class="code-line line-number" line="4">
+</span><span class="code-line line-number" line="5"><span class="token keyword module">export</span> <span class="token keyword module">default</span> <span class="token function">defineConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="6">  <span class="token literal-property property">plugins</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token function">react</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="7">  <span class="token comment">// This ensures all asset paths are correctly prefixed with /my-spa/</span>
+</span><span class="code-line line-number" line="8">  <span class="token literal-property property">base</span><span class="token operator">:</span> <span class="token string">'/my-spa/'</span><span class="token punctuation">,</span> 
+</span><span class="code-line line-number" line="9"><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span></code><div onclick="copied(this)" data-code="// File: web/my-spa/vite.config.js
+import { defineConfig } from &#x27;vite&#x27;
+import react from &#x27;@vitejs/plugin-react&#x27;
+
+export default defineConfig({
+  plugins: [react()],
+  // This ensures all asset paths are correctly prefixed with /my-spa/
+  base: &#x27;/my-spa/&#x27;, 
+})
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+      </li>
+    </ol>
+    <h3 id="chapter-4-the-unified-development-experience"><a class="anchor" aria-hidden="true" tabindex="-1" href="#chapter-4-the-unified-development-experience"><span class="octicon octicon-link"></span></a>Chapter 4: The Unified Development Experience</h3>
+    <p>With the backend and frontend now in place, you can start both with a single command.</p>
+    <ol>
+      <li><strong>Navigate back to the Gingee project root:</strong>
+        <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1"><span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>
+</span></code><div onclick="copied(this)" data-code="cd ../..
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+      </li>
+      <li><strong>Start the server:</strong>
+        <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1"><span class="token function">npm</span> run dev
+</span></code><div onclick="copied(this)" data-code="npm run dev
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+      </li>
+    </ol>
+    <p>Gingee will start, automatically launch your Vite dev server, and begin proxying requests. You can now navigate to <code>http://localhost:7070/my-spa</code>, and your React application will load with full hot-reloading capabilities.</p>
+    <p>Any <code>fetch</code> call from your React app to a relative path like <code>/my-spa/api/hello</code> will be seamlessly handled by the Gingee backend, with no CORS errors.</p>
+    <h3 id="chapter-5-building-for-production"><a class="anchor" aria-hidden="true" tabindex="-1" href="#chapter-5-building-for-production"><span class="octicon octicon-link"></span></a>Chapter 5: Building for Production</h3>
+    <p>When you are ready to deploy, you need to create an optimized production build of your frontend.</p>
+    <ol>
+      <li><strong>Navigate into your app's directory:</strong>
+        <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1"><span class="token builtin class-name">cd</span> web/my-spa
+</span></code><div onclick="copied(this)" data-code="cd web/my-spa
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+      </li>
+      <li><strong>Run your build script:</strong>
+        <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1"><span class="token function">npm</span> run build
+</span></code><div onclick="copied(this)" data-code="npm run build
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>This will create the <code>dist</code> folder containing your compiled assets.
+      </li>
+    </ol>
+    <h3 id="chapter-6-preparing-for-distribution"><a class="anchor" aria-hidden="true" tabindex="-1" href="#chapter-6-preparing-for-distribution"><span class="octicon octicon-link"></span></a>Chapter 6: Preparing for Distribution</h3>
+    <p>Before packaging, create two manifest files in your app's <code>box</code> folder.</p>
+    <p>
+      <strong>1. Permissions Manifest (<code>pmft.json</code>)</strong>
+      Declare all the Gingee modules your backend API needs. See Permissions Guide <a href="./permissions-guide.md">MD</a> <a href="./permissions-guide.html">HTML</a>
+    </p>
+    <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token comment">// File: web/my-spa/box/pmft.json</span>
+</span><span class="code-line line-number" line="2"><span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"permissions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="4">    <span class="token property">"mandatory"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"db"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="5">    <span class="token property">"optional"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="6">  <span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="7"><span class="token punctuation">}</span>
+</span></code><div onclick="copied(this)" data-code="// File: web/my-spa/box/pmft.json
+{
+  &#x22;permissions&#x22;: {
+    &#x22;mandatory&#x22;: [ &#x22;db&#x22;],
+    &#x22;optional&#x22;: []
   }
 }
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
-    <h3 id="core-metadata"><a class="anchor" aria-hidden="true" tabindex="-1" href="#core-metadata"><span class="octicon octicon-link"></span></a>Core Metadata</h3>
-    <ul>
-      <li><strong><code>name</code></strong> (string, required)</li>
-      <li><strong><code>description</code></strong> (string, optional)</li>
-      <li><strong><code>version</code></strong> (string, optional)</li>
-    </ul>
-    <h3 id="application-type--mode"><a class="anchor" aria-hidden="true" tabindex="-1" href="#application-type--mode"><span class="octicon octicon-link"></span></a>Application Type &#x26; Mode</h3>
-    <ul>
-      <li>
-        <p><strong><code>type</code></strong> (string, optional)</p>
-        <ul>
-          <li><strong><code>"MPA"</code></strong> (Multi-Page Application): The default.</li>
-          <li><strong><code>"SPA"</code></strong> (Single Page Application - NOT IMPLEMENTED YET): Activates "SPA Fallback" for client-side routing.</li>
-        </ul>
-      </li>
-      <li>
-        <p><strong><code>mode</code></strong> (string, optional)</p>
-        <ul>
-          <li><strong><code>"production"</code></strong> (Default): The standard mode for live servers. For SPAs, this serves the compiled static assets from the <code>build_path</code>.</li>
-          <li><strong><code>"development"</code></strong> : Activates development-only features. For SPAs, this enables the seamless dev server proxy.</li>
-        </ul>
-      </li>
-    </ul>
-    <h3 id="spa-configuration-spa-object"><a class="anchor" aria-hidden="true" tabindex="-1" href="#spa-configuration-spa-object"><span class="octicon octicon-link"></span></a>SPA Configuration (<code>spa</code> object)</h3>
-    <p>This object is only used when app is of <code>"type": "SPA"</code>.</p>
-    <ul>
-      <li><strong><code>spa.enabled</code></strong> (boolean, required): Must be <code>true</code> to activate SPA features.</li>
-      <li><strong><code>spa.dev_server_proxy</code></strong> (string, optional): <strong>(Development only)</strong> The full URL of your frontend's hot-reloading development server (e.g., Vite, Angular CLI). Gingee will proxy all non-API requests to this URL when the app's <code>mode</code> is <code>"development"</code>.</li>
-      <li><strong><code>spa.build_path</code></strong> (string, required): <strong>(Production only)</strong> The path to the directory containing your compiled frontend assets, relative to the app's root folder (e.g., <code>./dist</code>).</li>
-      <li><strong><code>spa.fallback_path</code></strong> (string, required): <strong>(Production only)</strong> The path to the SPA's entrypoint file (usually <code>index.html</code>) within the <code>build_path</code>. Gingee serves this file for any request that doesn't match an API route or a static asset, enabling client-side routing.</li>
-    </ul>
-    <h3 id="database-connections"><a class="anchor" aria-hidden="true" tabindex="-1" href="#database-connections"><span class="octicon octicon-link"></span></a>Database Connections</h3>
-    <ul>
-      <li><strong><code>db</code></strong> (array, optional)
-        <ul>
-          <li>An array of database connection objects.</li>
-          <li><strong>Properties:</strong> <code>type</code>, <code>name</code>, <code>host</code>, <code>user</code>, <code>password</code>, <code>database</code>, etc.</li>
-        </ul>
-      </li>
-    </ul>
-    <h3 id="script-execution-configuration"><a class="anchor" aria-hidden="true" tabindex="-1" href="#script-execution-configuration"><span class="octicon octicon-link"></span></a>Script Execution Configuration</h3>
-    <ul>
-      <li>
-        <p><strong><code>startup_scripts</code></strong> (array, optional)</p>
-        <ul>
-          <li>An array of strings specifying script paths relative to the <code>box</code> folder.</li>
-          <li><strong>Purpose:</strong> These scripts are executed <strong>once in sequential order</strong> when the application is first loaded by the server (on startup, after an install, or after an upgrade/rollback).</li>
-          <li><strong>Use Cases:</strong> Ideal for database schema creation/migration, seeding initial data, or warming up the application cache.</li>
-          <li><strong>Example:</strong> <code>"startup_scripts": ["setup/01_schema.js", "setup/02_seed_data.js"]</code></li>
-        </ul>
-      </li>
-      <li>
-        <p><strong><code>default_include</code></strong> (array, optional)</p>
-        <ul>
-          <li>An array of strings specifying "middleware" scripts to be executed <strong>before every server script</strong> in the app.</li>
-          <li><strong>Purpose:</strong> Perfect for setting up common, request-level logic like authentication checks, request logging, or setting common response headers.</li>
-          <li><strong>Path Resolution:</strong>
-            <ul>
-              <li>If the string has a file extension (e.g., <code>"lib/auth.js"</code>), it is resolved as a path relative to the app's <code>box</code> folder.</li>
-              <li>If it has no extension (e.g., <code>"auth"</code>), it is resolved from the global <code>modules</code> folder.</li>
-            </ul>
-          </li>
-          <li><strong>Example:</strong> <code>"default_include": ["auth_middleware.js", "lib/request_logger.js"]</code></li>
-        </ul>
-      </li>
-      <li>
-        <p><strong><code>env</code></strong> (object, optional)</p>
-        <ul>
-          <li>A key-value store for non-sensitive environment variables, made available at <code>$g.app.env</code>.</li>
-        </ul>
-      </li>
-      <li>
-        <p><strong><code>jwt_secret</code></strong> (string, optional)</p>
-        <ul>
-          <li>A strong, unique secret key used by the <code>auth</code> module for creating and verifying JSON Web Tokens (JWTs).</li>
-        </ul>
-      </li>
-    </ul>
-    <h3 id="cache"><a class="anchor" aria-hidden="true" tabindex="-1" href="#cache"><span class="octicon octicon-link"></span></a>Cache</h3>
-    <ul>
-      <li><strong><code>cache</code></strong> (object, optional)
-        <ul>
-          <li>Defines the caching <strong>strategy</strong> for this specific application.</li>
-          <li><strong><code>cache.client</code></strong>: Controls browser caching (<code>Cache-Control</code> header).</li>
-          <li><strong><code>cache.server</code></strong>: Controls server-side caching of static files and transpiled scripts in Memory or Redis.</li>
-        </ul>
-      </li>
-    </ul>
-    <hr>
-    <h3 id="the-pmftjson-file-permissions-manifest"><a class="anchor" aria-hidden="true" tabindex="-1" href="#the-pmftjson-file-permissions-manifest"><span class="octicon octicon-link"></span></a>The <code>pmft.json</code> File (Permissions Manifest)</h3>
-    <p>If you plan to distribute your application as a <code>.gin</code> package, you must declare the permissions it requires in a <code>pmft.json</code> file. This manifest is read by the <code>gingee-cli</code> during the installation process to request consent from the server administrator.</p>
-    <ul>
-      <li><strong>Location:</strong> <code>web/&#x3C;your-app-name>/box/pmft.json</code></li>
-      <li><strong>Purpose:</strong> To declare your app's required (<code>mandatory</code>) and optional (<code>optional</code>) permissions.</li>
-    </ul>
-    <p>For a complete guide on the permissions system and the structure of this file, please see the <strong>Gingee Permissions Guide <a href="./permissions-guide.md">MD</a> <a href="./permissions-guide.html">HTML</a></strong>.</p>
-    <hr>
-    <h2 id="the-routesjson-file-manifest-based-routing"><a class="anchor" aria-hidden="true" tabindex="-1" href="#the-routesjson-file-manifest-based-routing"><span class="octicon octicon-link"></span></a>The <code>routes.json</code> File (Manifest-Based Routing)</h2>
-    <p>For applications that require more powerful and flexible routing, such as RESTful APIs with dynamic path parameters, you can create a <code>routes.json</code> file. When this file is present in an app's <code>box</code> folder, it <strong>activates manifest-based routing</strong>, which takes precedence over the default file-based routing.</p>
-    <ul>
-      <li><strong>Location:</strong> <code>web/my-app/box/routes.json</code></li>
-      <li><strong>Purpose:</strong> To explicitly map URL path patterns and HTTP methods to specific server script files.</li>
-    </ul>
-    <h4 id="structure-of-routesjson"><a class="anchor" aria-hidden="true" tabindex="-1" href="#structure-of-routesjson"><span class="octicon octicon-link"></span></a>Structure of <code>routes.json</code></h4>
-    <p>The file must contain a single root object with a <code>routes</code> key, which holds an array of route definition objects.</p>
-    <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="2">  <span class="token property">"routes"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-</span><span class="code-line line-number" line="3">    <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="4">      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/users"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="5">      <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"GET"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="6">      <span class="token property">"script"</span><span class="token operator">:</span> <span class="token string">"users/list.js"</span>
-</span><span class="code-line line-number" line="7">    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="8">    <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="9">      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/users/:userId"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="10">      <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"GET"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="11">      <span class="token property">"script"</span><span class="token operator">:</span> <span class="token string">"users/get.js"</span>
-</span><span class="code-line line-number" line="12">    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="13">    <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="14">      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/users/:userId"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="15">      <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"PUT"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="16">      <span class="token property">"script"</span><span class="token operator">:</span> <span class="token string">"users/update.js"</span>
-</span><span class="code-line line-number" line="17">    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="18">    <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="19">      <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/:category/:slug/images/:imageId?"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="20">      <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"GET"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="21">      <span class="token property">"script"</span><span class="token operator">:</span> <span class="token string">"content/view.js"</span>
-</span><span class="code-line line-number" line="22">    <span class="token punctuation">}</span>
-</span><span class="code-line line-number" line="23">  <span class="token punctuation">]</span>
-</span><span class="code-line line-number" line="24"><span class="token punctuation">}</span>
-</span></code><div onclick="copied(this)" data-code="{
-  &#x22;routes&#x22;: [
-    {
-      &#x22;path&#x22;: &#x22;/users&#x22;,
-      &#x22;method&#x22;: &#x22;GET&#x22;,
-      &#x22;script&#x22;: &#x22;users/list.js&#x22;
-    },
-    {
-      &#x22;path&#x22;: &#x22;/users/:userId&#x22;,
-      &#x22;method&#x22;: &#x22;GET&#x22;,
-      &#x22;script&#x22;: &#x22;users/get.js&#x22;
-    },
-    {
-      &#x22;path&#x22;: &#x22;/users/:userId&#x22;,
-      &#x22;method&#x22;: &#x22;PUT&#x22;,
-      &#x22;script&#x22;: &#x22;users/update.js&#x22;
-    },
-    {
-      &#x22;path&#x22;: &#x22;/:category/:slug/images/:imageId?&#x22;,
-      &#x22;method&#x22;: &#x22;GET&#x22;,
-      &#x22;script&#x22;: &#x22;content/view.js&#x22;
-    }
+    <p>
+      <strong>2. Package Contents Manifest (<code>.gpkg</code>)</strong>
+      Specify which files to include in the final <code>.gin</code> package. <strong>Crucially, you must include the <code>dist</code> folder and exclude development source files.</strong>
+    </p>
+    <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token comment">// File: web/my-spa/box/.gpkg</span>
+</span><span class="code-line line-number" line="2"><span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"include"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+</span><span class="code-line line-number" line="4">    <span class="token string">"box/**/*"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="5">    <span class="token string">"dist/**/*"</span>
+</span><span class="code-line line-number" line="6">  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="7">  <span class="token property">"exclude"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+</span><span class="code-line line-number" line="8">    <span class="token string">"src"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="9">    <span class="token string">"node_modules"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="10">    <span class="token string">".gitignore"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="11">    <span class="token string">"vite.config.js"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="12">    <span class="token string">"*.lock"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="13">    <span class="token string">"tsconfig.json"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="14">    <span class="token string">"tsconfig.node.json"</span>
+</span><span class="code-line line-number" line="15">  <span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="16"><span class="token punctuation">}</span>
+</span></code><div onclick="copied(this)" data-code="// File: web/my-spa/box/.gpkg
+{
+  &#x22;include&#x22;: [
+    &#x22;box/**/*&#x22;,
+    &#x22;dist/**/*&#x22;
+  ],
+  &#x22;exclude&#x22;: [
+    &#x22;src&#x22;,
+    &#x22;node_modules&#x22;,
+    &#x22;.gitignore&#x22;,
+    &#x22;vite.config.js&#x22;,
+    &#x22;*.lock&#x22;,
+    &#x22;tsconfig.json&#x22;,
+    &#x22;tsconfig.node.json&#x22;
   ]
 }
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
-    <h4 id="route-definition-properties"><a class="anchor" aria-hidden="true" tabindex="-1" href="#route-definition-properties"><span class="octicon octicon-link"></span></a>Route Definition Properties</h4>
-    <p>Each object in the <code>routes</code> array defines a single endpoint and has the following properties:</p>
-    <ul>
-      <li>
-        <p><strong><code>path</code></strong> (string, required)</p>
-        <ul>
-          <li><strong>Description:</strong> A URL path pattern that can include static segments and dynamic, named parameters.</li>
-          <li><strong>Dynamic Parameters:</strong> A parameter is defined by a colon (<code>:</code>), followed by its name (e.g., <code>:userId</code>). The name should use standard variable naming conventions.</li>
-          <li><strong>Optional Parameters:</strong> A parameter can be made optional by adding a question mark (<code>?</code>) to its name (e.g., <code>:imageId?</code>).</li>
-          <li><strong>Wildcards:</strong> You can use an asterisk (<code>*</code>) as a wildcard to match the rest of a path.</li>
-        </ul>
-      </li>
-      <li>
-        <p><strong><code>method</code></strong> (string, optional)</p>
-        <ul>
-          <li><strong>Description:</strong> The HTTP method that this route will respond to. The matching is case-insensitive.</li>
-          <li><strong>Default:</strong> If omitted, the method defaults to <code>GET</code>.</li>
-          <li><strong>Supported Values:</strong> Standard HTTP verbs like <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, <code>PATCH</code>. You can also use <code>ALL</code> to match any method for a given path.</li>
-        </ul>
-      </li>
-      <li>
-        <p><strong><code>script</code></strong> (string, required)</p>
-        <ul>
-          <li><strong>Description:</strong> The path to the server script file that should be executed when this route is matched. The path is <strong>relative to the <code>box</code> folder</strong>. The <code>.js</code> extension is optional.</li>
-          <li><strong>Example:</strong> <code>"script": "api/users/get-profile"</code> will execute the file at <code>web/my-app/box/api/users/get-profile.js</code>.</li>
-        </ul>
-      </li>
-    </ul>
-    <h4 id="accessing-path-parameters"><a class="anchor" aria-hidden="true" tabindex="-1" href="#accessing-path-parameters"><span class="octicon octicon-link"></span></a>Accessing Path Parameters</h4>
-    <p>When a route with dynamic parameters is matched, Gingee automatically parses the values from the URL and makes them available in your server script via the <strong><code>$g.request.params</code></strong> object.</p>
-    <p><strong>Example:</strong></p>
-    <ul>
-      <li><strong>Route in <code>routes.json</code>:</strong>
-        <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span> <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/products/:productId/reviews/:reviewId"</span><span class="token punctuation">,</span> <span class="token property">"script"</span><span class="token operator">:</span> <span class="token string">"reviews/get.js"</span> <span class="token punctuation">}</span>
-</span></code><div onclick="copied(this)" data-code="{ &#x22;path&#x22;: &#x22;/products/:productId/reviews/:reviewId&#x22;, &#x22;script&#x22;: &#x22;reviews/get.js&#x22; }
+    <h3 id="chapter-7-packaging-and-deployment"><a class="anchor" aria-hidden="true" tabindex="-1" href="#chapter-7-packaging-and-deployment"><span class="octicon octicon-link"></span></a>Chapter 7: Packaging and Deployment</h3>
+    <p>With the frontend built and manifests in place, you are ready to create your distributable Gingee application package.</p>
+    <ol>
+      <li><strong>Set <code>app.json</code> to Production Mode:</strong> Change <code>"mode": "development"</code> to <code>"mode": "production"</code> in your <code>app.json</code>.</li>
+      <li><strong>Package the App:</strong> From your Gingee project root, run:
+        <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1">gingee-cli package-app <span class="token parameter variable">--appName</span> my-spa
+</span></code><div onclick="copied(this)" data-code="gingee-cli package-app --appName my-spa
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
       </li>
-      <li><strong>Incoming Request URL:</strong> <code>/my-app/products/abc-123/reviews/42</code></li>
-      <li><strong>Server Script (<code>box/reviews/get.js</code>):</strong>
-        <pre class="language-javascript"><code class="language-javascript code-highlight"><span class="code-line line-number" line="1">module<span class="token punctuation">.</span><span class="token method-variable function-variable method function property-access">exports</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="2">    <span class="token keyword control-flow">await</span> <span class="token function">gingee</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">$g</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="3">        <span class="token keyword">const</span> productId <span class="token operator">=</span> $g<span class="token punctuation">.</span><span class="token property-access">request</span><span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">.</span><span class="token property-access">productId</span><span class="token punctuation">;</span> <span class="token comment">// "abc-123"</span>
-</span><span class="code-line line-number" line="4">        <span class="token keyword">const</span> reviewId <span class="token operator">=</span> $g<span class="token punctuation">.</span><span class="token property-access">request</span><span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">.</span><span class="token property-access">reviewId</span><span class="token punctuation">;</span>   <span class="token comment">// "42"</span>
-</span><span class="code-line line-number" line="5">        
-</span><span class="code-line line-number" line="6">        $g<span class="token punctuation">.</span><span class="token property-access">response</span><span class="token punctuation">.</span><span class="token method function property-access">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="7">            <span class="token literal-property property">message</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Fetching review </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>reviewId<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> for product </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>productId<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">.</span><span class="token template-punctuation string">`</span></span>
-</span><span class="code-line line-number" line="8">        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</span><span class="code-line line-number" line="9">    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</span><span class="code-line line-number" line="10"><span class="token punctuation">}</span><span class="token punctuation">;</span>
-</span></code><div onclick="copied(this)" data-code="module.exports = async function() {
-    await gingee(async ($g) => {
-        const productId = $g.request.params.productId; // &#x22;abc-123&#x22;
-        const reviewId = $g.request.params.reviewId;   // &#x22;42&#x22;
-        
-        $g.response.send({
-            message: &#x60;Fetching review ${reviewId} for product ${productId}.&#x60;
-        });
-    });
-};
-" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
-      </li>
-    </ul>
+      <li><strong>Deploy:</strong> This will create a <code>my-spa-v1.0.0.gin</code> file. You can now deploy this single file to any production Gingee server using the <code>gingee-cli install-app</code> or <code>upgrade-app</code> commands.</li>
+    </ol>
+    <p>Congratulations! You have successfully built and packaged a modern Single Page Application on the Gingee platform</p>
     <script>/*! @uiw/copy-to-clipboard v1.0.12 | MIT (c) 2021 Kenny Wang | https://github.com/uiwjs/copy-to-clipboard.git */
 !function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).copyTextToClipboard=t()}(this,(function(){"use strict";return function(e,t){const o=document.createElement("textarea");o.value=e,o.setAttribute("readonly",""),o.style={position:"absolute",left:"-9999px"},document.body.appendChild(o);const n=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);o.select();let c=!1;try{c=!!document.execCommand("copy")}catch(e){c=!1}document.body.removeChild(o),n&&document.getSelection&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(n)),t&&t(c)}}));
 
