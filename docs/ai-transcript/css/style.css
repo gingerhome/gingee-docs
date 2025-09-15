@@ -24,6 +24,18 @@ header h1 {
     /* A nice purple for the title */
 }
 
+a{
+	text-decoration: none;
+}
+
+.container{
+	max-width: 1024px;
+	margin: auto;
+	display: flex;
+	flex-flow: row;
+	gap: 10px;
+}
+
 .intro{
 	background-color: #f1f1d1;
 	color: #101010;
@@ -37,6 +49,18 @@ header h1 {
 
 .intro-content{
 }
+
+.col-2{
+	display: inline-block;
+	min-width: 25%;
+}
+
+.col-10{
+	display: inline-block;
+	min-width: 75%;
+}
+
+
 
 .align-center{
 	justify-content: center;
