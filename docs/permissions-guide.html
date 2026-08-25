@@ -123,31 +123,27 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <p><strong>Example <code>pmft.json</code> for a blog application:</strong></p>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="2">  <span class="token property">"permissions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="3">    <span class="token property">"mandatory"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-</span><span class="code-line line-number" line="4">      <span class="token string">"db"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="5">      <span class="token string">"fs"</span>
-</span><span class="code-line line-number" line="6">    <span class="token punctuation">]</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="7">    <span class="token property">"optional"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-</span><span class="code-line line-number" line="8">      <span class="token string">"httpclient"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="9">      <span class="token string">"email"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="10">      <span class="token string">"ai"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="11">      <span class="token string">"scheduler"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="12">      <span class="token string">"websockets"</span>
-</span><span class="code-line line-number" line="13">    <span class="token punctuation">]</span>
-</span><span class="code-line line-number" line="14">  <span class="token punctuation">}</span>
-</span><span class="code-line line-number" line="15"><span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="3">    <span class="token property">"mandatory"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"db"</span><span class="token punctuation">,</span> <span class="token string">"fs"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="4">    <span class="token property">"optional"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+</span><span class="code-line line-number" line="5">      <span class="token string">"httpclient"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="6">      <span class="token string">"email"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="7">      <span class="token string">"ai"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="8">      <span class="token string">"scheduler"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="9">      <span class="token string">"websockets"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="10">      <span class="token string">"queue"</span>
+</span><span class="code-line line-number" line="11">    <span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="12">  <span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="13"><span class="token punctuation">}</span>
 </span></code><div onclick="copied(this)" data-code="{
   &#x22;permissions&#x22;: {
-    &#x22;mandatory&#x22;: [
-      &#x22;db&#x22;,
-      &#x22;fs&#x22;
-    ],
+    &#x22;mandatory&#x22;: [&#x22;db&#x22;, &#x22;fs&#x22;],
     &#x22;optional&#x22;: [
       &#x22;httpclient&#x22;,
       &#x22;email&#x22;,
       &#x22;ai&#x22;,
       &#x22;scheduler&#x22;,
-      &#x22;websockets&#x22;
+      &#x22;websockets&#x22;,
+      &#x22;queue&#x22;
     ]
   }
 }
@@ -164,30 +160,18 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <p><strong>Example <code>settings/permissions.json</code>:</strong></p>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="2">  <span class="token property">"glade"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="3">    <span class="token property">"granted"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-</span><span class="code-line line-number" line="4">      <span class="token string">"platform"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="5">      <span class="token string">"fs"</span>
-</span><span class="code-line line-number" line="6">    <span class="token punctuation">]</span>
-</span><span class="code-line line-number" line="7">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="8">  <span class="token property">"my-blog-app"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="9">    <span class="token property">"granted"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-</span><span class="code-line line-number" line="10">      <span class="token string">"db"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="11">      <span class="token string">"fs"</span>
-</span><span class="code-line line-number" line="12">    <span class="token punctuation">]</span>
-</span><span class="code-line line-number" line="13">  <span class="token punctuation">}</span>
-</span><span class="code-line line-number" line="14"><span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="3">    <span class="token property">"granted"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"platform"</span><span class="token punctuation">,</span> <span class="token string">"fs"</span><span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="4">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="5">  <span class="token property">"my-blog-app"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="6">    <span class="token property">"granted"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"db"</span><span class="token punctuation">,</span> <span class="token string">"fs"</span><span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="7">  <span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="8"><span class="token punctuation">}</span>
 </span></code><div onclick="copied(this)" data-code="{
   &#x22;glade&#x22;: {
-    &#x22;granted&#x22;: [
-      &#x22;platform&#x22;,
-      &#x22;fs&#x22;
-    ]
+    &#x22;granted&#x22;: [&#x22;platform&#x22;, &#x22;fs&#x22;]
   },
   &#x22;my-blog-app&#x22;: {
-    &#x22;granted&#x22;: [
-      &#x22;db&#x22;,
-      &#x22;fs&#x22;
-    ]
+    &#x22;granted&#x22;: [&#x22;db&#x22;, &#x22;fs&#x22;]
   }
 }
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
@@ -227,6 +211,11 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
           <td align="left"><strong>High.</strong> The app can send outbound email using server- or app-configured credentials (or a runtime key). Can incur cost and deliver messages externally.</td>
         </tr>
         <tr>
+          <td align="left"><strong>messaging</strong></td>
+          <td align="left">Allows the app to send outbound messages (SMS/MMS/WhatsApp) via <code>require('messaging')</code> (configured provider such as Twilio, or the <code>mock</code> / <code>console</code> logger). Supports per-call config override with <code>messaging.sendWithConfig</code>.</td>
+          <td align="left"><strong>High.</strong> The app can send SMS/MMS/WhatsApp using server- or app-configured credentials (or runtime keys). Can incur cost and deliver messages externally.</td>
+        </tr>
+        <tr>
           <td align="left"><strong>ai</strong></td>
           <td align="left">Allows the app to use generative AI via <code>require('ai')</code> (chat, streaming, multimodal, document parsing, content moderation). Providers include <code>mock</code> and <code>gemini</code> (<code>xai</code> planned).</td>
           <td align="left"><strong>High.</strong> The app can send prompts, files, and images to external AI providers (unless using <code>mock</code>), with token/cost and data-egress implications.</td>
@@ -248,13 +237,18 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
         <tr>
           <td align="left"><strong>httpclient</strong></td>
-          <td align="left">Permits the app to make outbound HTTP/HTTPS requests via <code>require('httpclient')</code>. Also required for scheduler <strong>URL</strong> targets. Subject to server <strong>egress</strong> policy (default blocks private/loopback/metadata SSRF targets).</td>
+          <td align="left">Permits the app to make outbound HTTP/HTTPS requests via <code>require('httpclient')</code> (<code>get</code> / <code>post</code> / <code>put</code> / <code>patch</code> / <code>delete</code>). Also required for scheduler <strong>URL</strong> targets. Subject to server <strong>egress</strong> policy (default blocks private/loopback/metadata SSRF targets).</td>
           <td align="left"><strong>High.</strong> The app can call allowed network destinations; without egress policy this would include internal hosts.</td>
         </tr>
         <tr>
           <td align="left"><strong>fs</strong></td>
-          <td align="left">Grants full read/write access to files and folders within the app's own secure directories (<code>box</code> and <code>web</code>).</td>
+          <td align="left">Grants sandboxed read/write, directory, listing (<code>readdir</code> / <code>listFiles</code> / <code>listDirs</code> / <code>walk</code>), and <code>stat</code> access within the app's own directories (<code>box</code> and <code>web</code>).</td>
           <td align="left"><strong>Medium.</strong> Access is jailed to the app's own directory, preventing access to other apps or system files.</td>
+        </tr>
+        <tr>
+          <td align="left"><strong>module_override</strong></td>
+          <td align="left">Allows <code>$g.overrideModule(specifier, boxRelativePath)</code> so that, for the rest of the request, matching <code>require(specifier)</code> loads an app box script instead. Specifiers: protected bare names (<code>fs</code>, …), other bare names (<code>crypto</code>, <code>url</code>, …), relative (<code>./x</code>) or box-root paths. <strong>Only this permission</strong> is required to install/apply overrides. See <strong>Module overrides</strong> below.</td>
+          <td align="left"><strong>High.</strong> Changes what <code>require()</code> means for that request. Restricted/forbidden names cannot be overridden. Wrappers still run under normal gbox jailing. Grant only to trusted apps.</td>
         </tr>
         <tr>
           <td align="left"><strong>pdf</strong></td>
@@ -273,6 +267,89 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
       </tbody>
     </table>
+    <h2 id="module-overrides-module_override"><a class="anchor" aria-hidden="true" tabindex="-1" href="#module-overrides-module_override"><span class="octicon octicon-link"></span></a>Module overrides (<code>module_override</code>)</h2>
+    <p><strong>Purpose:</strong> Let a trusted app install <strong>request-scoped</strong> redirects of require specifiers to another script <strong>inside the same app box</strong>. Scripts keep normal <code>require(...)</code> call sites; middleware (or any <code>gingee</code> handler) decides the binding.</p>
+    <h3 id="what-can-be-overridden"><a class="anchor" aria-hidden="true" tabindex="-1" href="#what-can-be-overridden"><span class="octicon octicon-link"></span></a>What can be overridden</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">Specifier kind</th>
+          <th align="left">Example</th>
+          <th align="left">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">Protected bare name</td>
+          <td align="left"><code>fs</code>, <code>db</code>, <code>httpclient</code></td>
+          <td align="left"><strong><code>module_override</code> alone</strong> is enough to redirect; the real platform module is only loaded if something (usually the wrapper) <code>require</code>s it under normal rules (then that permission is needed).</td>
+        </tr>
+        <tr>
+          <td align="left">Other bare name</td>
+          <td align="left"><code>crypto</code>, <code>uuid</code>, <code>url</code></td>
+          <td align="left">Same — redirect with <code>module_override</code> only.</td>
+        </tr>
+        <tr>
+          <td align="left">Relative path</td>
+          <td align="left"><code>./helper</code>, <code>../shared/x</code></td>
+          <td align="left">Matched after resolving against the <strong>calling</strong> script, then as a box-relative key. Prefer map keys like <code>sandboxed/helper</code> (box-relative, no leading <code>./</code>).</td>
+        </tr>
+        <tr>
+          <td align="left">Box-root path</td>
+          <td align="left"><code>lib/util</code> (no <code>./</code>)</td>
+          <td align="left">Matched as path under <code>box/</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Never overridable:</strong> restricted modules (<code>platform</code>, <code>gingee</code>, <code>scheduler</code>, …), <code>engine/*</code>, and forbidden host builtins (<code>child_process</code>, <code>node:fs</code>, …).</p>
+    <h3 id="api"><a class="anchor" aria-hidden="true" tabindex="-1" href="#api"><span class="octicon octicon-link"></span></a>API</h3>
+    <pre class="language-javascript"><code class="language-javascript code-highlight"><span class="code-line line-number" line="1"><span class="token comment">// Replacement script is always box-relative (app-defined layout)</span>
+</span><span class="code-line line-number" line="2">$g<span class="token punctuation">.</span><span class="token method function property-access">overrideModule</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">,</span> <span class="token string">"library/fswrapper.js"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span><span class="code-line line-number" line="3"><span class="token comment">// Relative require from a script under sandboxed/ can match box-relative keys:</span>
+</span><span class="code-line line-number" line="4">$g<span class="token punctuation">.</span><span class="token method function property-access">overrideModule</span><span class="token punctuation">(</span><span class="token string">"sandboxed/helper"</span><span class="token punctuation">,</span> <span class="token string">"library/helper_wrap.js"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></code><div onclick="copied(this)" data-code="// Replacement script is always box-relative (app-defined layout)
+$g.overrideModule(&#x22;fs&#x22;, &#x22;library/fswrapper.js&#x22;);
+// Relative require from a script under sandboxed/ can match box-relative keys:
+$g.overrideModule(&#x22;sandboxed/helper&#x22;, &#x22;library/helper_wrap.js&#x22;);
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+    <ul>
+      <li><strong><code>$g.boxRelativeScript</code></strong> — main request script under <code>box/</code> (e.g. <code>sandboxed/run.js</code>).</li>
+      <li>Overrides last for the <strong>rest of that HTTP request</strong> (ALS). No effect on other apps.</li>
+      <li>Without <strong><code>module_override</code></strong>, <code>$g.overrideModule</code> throws; gbox ignores the map.</li>
+    </ul>
+    <h3 id="rules-platform"><a class="anchor" aria-hidden="true" tabindex="-1" href="#rules-platform"><span class="octicon octicon-link"></span></a>Rules (platform)</h3>
+    <ol>
+      <li>App must be granted <strong><code>module_override</code></strong> (only permission needed to install/apply a redirect).</li>
+      <li>Override <strong>target path</strong> must resolve <strong>inside the app box</strong>.</li>
+      <li>Loading the target uses <strong><code>applyModuleOverrides: false</code></strong> for that script and its nested requires: normal gbox jailing (permissions, path jail, restricted/forbidden), but the override map is not re-applied (so a wrapper can <code>require('fs')</code> and get the real platform module).</li>
+      <li>No app folder names are special-cased by the engine.</li>
+    </ol>
+    <h3 id="typical-pattern"><a class="anchor" aria-hidden="true" tabindex="-1" href="#typical-pattern"><span class="octicon octicon-link"></span></a>Typical pattern</h3>
+    <pre class="language-text"><code class="language-text code-highlight"><span class="code-line line-number" line="1">default_include middleware
+</span><span class="code-line line-number" line="2">  → if $g.boxRelativeScript is under sandboxed/
+</span><span class="code-line line-number" line="3">  → $g.overrideModule('fs', 'my/wrapper.js')
+</span><span class="code-line line-number" line="4">main script
+</span><span class="code-line line-number" line="5">  → require('fs')  →  app wrapper (box only)
+</span><span class="code-line line-number" line="6">wrapper
+</span><span class="code-line line-number" line="7">  → require('fs')  →  modules/fs.js (needs fs grant; overrides off)
+</span><span class="code-line line-number" line="8">  → extra app policy
+</span></code><div onclick="copied(this)" data-code="default_include middleware
+  → if $g.boxRelativeScript is under sandboxed/
+  → $g.overrideModule(&#x27;fs&#x27;, &#x27;my/wrapper.js&#x27;)
+main script
+  → require(&#x27;fs&#x27;)  →  app wrapper (box only)
+wrapper
+  → require(&#x27;fs&#x27;)  →  modules/fs.js (needs fs grant; overrides off)
+  → extra app policy
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+    <p>Sample: <strong><code>web/appsandboxtest/</code></strong> — full matrix (protected bare <code>fs</code>, other bare <code>crypto</code>, relative <code>./helper</code>, box-root <code>shared/bare_util</code>, project <code>local_modules</code> / <code>sandbox_kit</code> direct + override, deny restricted/forbidden). Needs <code>fs</code> + <code>module_override</code> (<code>fs</code> for the real module inside the fs wrapper). Host must set <code>box.local_modules: ["./local_modules"]</code>.</p>
+    <p>Instance-cache fixture (no special grants): <strong><code>web/perftest/</code></strong> — exercises <code>cache.server</code> sandboxed module reuse vs <code>no_cache_regex</code> (<code>test/e2e/perftest.e2e.test.js</code>). Host must set <code>box.local_modules: ["./local_modules"]</code>.</p>
+    <h3 id="security-notes-for-operators"><a class="anchor" aria-hidden="true" tabindex="-1" href="#security-notes-for-operators"><span class="octicon octicon-link"></span></a>Security notes for operators</h3>
+    <ul>
+      <li>App policy hook, not an OS sandbox. Target must stay in-box; nested <code>require</code> uses regular jailing.</li>
+      <li>Grant only to trusted packages. Wrappers can still use <strong>other</strong> grants (<code>httpclient</code>, <code>email</code>, …) on intercepted calls.</li>
+      <li>Do not grant unused High permissions alongside <code>module_override</code>.</li>
+    </ul>
     <script>/*! @uiw/copy-to-clipboard v1.0.12 | MIT (c) 2021 Kenny Wang | https://github.com/uiwjs/copy-to-clipboard.git */
 !function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).copyTextToClipboard=t()}(this,(function(){"use strict";return function(e,t){const o=document.createElement("textarea");o.value=e,o.setAttribute("readonly",""),o.style={position:"absolute",left:"-9999px"},document.body.appendChild(o);const n=document.getSelection().rangeCount>0&&document.getSelection().getRangeAt(0);o.select();let c=!1;try{c=!!document.execCommand("copy")}catch(e){c=!1}document.body.removeChild(o),n&&document.getSelection&&(document.getSelection().removeAllRanges(),document.getSelection().addRange(n)),t&&t(c)}}));
 

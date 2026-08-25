@@ -331,8 +331,13 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
         <tr>
           <td align="left"><strong>Explicit high-risk capabilities</strong></td>
-          <td align="left"><code>httpclient</code>, <code>email</code>, <code>ai</code>, <code>scheduler</code>, <code>platform</code></td>
-          <td align="left">Once granted, full capability within that API</td>
+          <td align="left"><code>httpclient</code>, <code>email</code>, <code>ai</code>, <code>scheduler</code>, <code>platform</code>, <strong><code>module_override</code></strong></td>
+          <td align="left">Once granted, full capability within that API; <code>module_override</code> rebinds matching <code>require()</code> specifiers per request</td>
+        </tr>
+        <tr>
+          <td align="left"><strong>Module override (opt-in)</strong></td>
+          <td align="left"><code>$g.overrideModule</code> + gbox redirect; target stays in box; wrapper <code>require</code> uses normal jailing (override map off)</td>
+          <td align="left">App-defined policy only; wrappers can still use <strong>other</strong> grants (e.g. exfil via <code>httpclient</code>). Not multi-tenant isolation.</td>
         </tr>
       </tbody>
     </table>
@@ -341,8 +346,14 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <ul>
       <li>Host <strong><code>process</code></strong> is not available (throws if referenced) — primary defense against reading host/<code>process.env</code> secrets</li>
       <li>Sandbox <strong><code>global</code> / <code>globalThis</code></strong> point at the sandbox object only</li>
-      <li><strong><code>eval</code> / <code>new Function</code> string codegen</strong> is <strong>allowed by default</strong> so common BOX-vendored UMD libraries (e.g. Handlebars) load; generated code still runs in the same vm and <strong>does not regain host <code>process</code></strong>. Set <code>box.allow_code_generation: false</code> for stricter lockdown when those libs are not needed.</li>
+      <li><strong><code>eval</code> / <code>new Function</code> dynamic code</strong> defaults to <strong>allowed</strong> at server level for Instant Time to Joy; production can set <code>box.allow_dynamic_code: false</code> and let individual apps <strong>opt in</strong> via <code>app.json</code> → <code>allow_dynamic_code: true</code> (explicit app setting wins). Generated code still runs in the same vm and <strong>does not regain host <code>process</code></strong>. Legacy key: <code>allow_code_generation</code>.</li>
+      <li><strong>Path jails</strong> use <code>realpath</code> of existing ancestors (<code>resolveRealPath</code> / <code>isPathInside</code>) so symlink escapes from a writable box are rejected.</li>
+      <li><strong>Egress DNS</strong> is checked and <strong>pinned at connect</strong> (<code>lookup</code>) to reduce rebinding between policy DNS and TCP connect; redirects re-validate each hop.</li>
       <li>Dangerous Node built-ins (<code>child_process</code>, <code>vm</code>, <code>node:fs</code>, …) cannot be opened via <code>allowed_modules</code></li>
+      <li><strong><code>module_override</code></strong> (if granted): request-scoped redirect of require specifiers (protected/other bare names, relative or box-root paths) to an in-box script. <strong>Only this permission</strong> is required to install/apply redirects; restricted/forbidden/<code>engine/*</code> cannot be overridden. Target stays in-box; nested wrapper <code>require</code> uses normal jailing (override map not re-applied). Does not special-case app folder names.</li>
+      <li><strong><code>box.local_modules</code></strong>: optional project-relative sandboxed require roots (default <code>[]</code>). Loaded with the same gbox jailing as app box scripts (not host <code>require</code>). Platform <code>modules/</code> wins over local roots for the same bare name. Not shipped inside <code>.gin</code> packages. When <code>cache.server</code> is enabled, instances are cached <strong>per app</strong> (shared file paths must not leak mutable exports across apps).</li>
+      <li><strong><code>cache.server</code> script instances</strong>: in-process reuse of sandboxed <code>module.exports</code> only—not a shared Redis script cache, and not reuse of request/<code>$g</code> context. Invalidated on <code>reloadApp</code> / process restart / <code>no_cache_regex</code>.</li>
+      <li><strong>Process guards:</strong> HTTP <code>try/catch</code> only covers the <strong>awaited handler promise</strong>. Detached async failures are logged (<code>[unhandledRejection]</code>) and the process continues. Sync <strong><code>uncaughtException</code></strong> is logged, the master attempts graceful shutdown (queue/websockets/workers/dev servers), then <strong>exits</strong> — availability is preferred over running with a possibly corrupt isolate. Prefer <code>queue</code> / explicit <code>await</code> for background work.</li>
     </ul>
     <p><strong>Still shared across all apps on the instance:</strong></p>
     <ul>
@@ -512,7 +523,12 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         <tr>
           <td align="left"><strong>S</strong>poofing</td>
           <td align="left">Forged admin session on Glade</td>
-          <td align="left">App-level auth (JWT etc.); harden Glade credentials; TLS</td>
+          <td align="left">Harden Glade credentials (set at <strong><code>gingee-cli init</code></strong>); TLS; session cookie <code>Path=/glade</code> + <code>SameSite=Strict</code> + <code>Secure</code> on HTTPS; <strong>login rate limit</strong> (IP + username)</td>
+        </tr>
+        <tr>
+          <td align="left"><strong>C</strong>SRF / same-host</td>
+          <td align="left">Sibling app XSS calling <code>/glade/api/*</code> with credentials</td>
+          <td align="left">Glade <strong>CSRF</strong> (<code>X-CSRF-Token</code> + <code>glade_csrf</code> cookie); Origin/Referer checks; prefer <strong>dedicated Glade host/port</strong></td>
         </tr>
         <tr>
           <td align="left"><strong>T</strong>ampering</td>
@@ -579,6 +595,56 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     </table>
     <hr>
     <h2 id="10-operator-checklist"><a class="anchor" aria-hidden="true" tabindex="-1" href="#10-operator-checklist"><span class="octicon octicon-link"></span></a>10. Operator checklist</h2>
+    <h3 id="how-not-to-take-down-the-node-availability"><a class="anchor" aria-hidden="true" tabindex="-1" href="#how-not-to-take-down-the-node-availability"><span class="octicon octicon-link"></span></a>How not to take down the node (availability)</h3>
+    <p>Gingee runs <strong>multiple apps in one Node process</strong> by default. An app cannot be assumed unable to affect siblings’ <strong>availability</strong>. Use this checklist to reduce accidental full-node outages under the <strong>cooperative</strong> model.</p>
+    <p><strong>Application authors</strong></p>
+    <ol>
+      <li><strong>Do not</strong> use tight sync loops (<code>while (true) {}</code>) or unbounded sync CPU work in box scripts — request timeouts only help code that <strong>yields</strong>.</li>
+      <li><strong>Await</strong> (or <code>.catch</code>) promises whose failure matters; fire-and-forget async is logged on rejection but will not fail that HTTP response after it already sent <strong>200</strong>.</li>
+      <li>Put email, messaging, AI, PDF, and other slow/heavy side effects on the <strong><code>queue</code></strong> (or scheduler → <code>target.type: "queue"</code>), not on the request thread.</li>
+      <li>Respect <code>$g.request.signal</code> / timeouts for long work; cancel outbound calls when aborted.</li>
+      <li>Avoid retaining unbounded in-memory caches in sandboxed module instances when <code>cache.server</code> is enabled — shared heap.</li>
+    </ol>
+    <p><strong>Operators</strong></p>
+    <ol>
+      <li>Set <strong><code>limits</code></strong> (<code>request_timeout_ms</code>, concurrency, outbound timeouts, body size). Do not disable timeouts without a reason.</li>
+      <li>For known-heavy apps (PDF, charts, large AI), enable <strong><code>isolation.mode: "process"</code></strong> (or list them under <code>isolation.apps</code> / groups) and set <strong><code>isolation.worker_limits.max_old_space_mb</code></strong> so a worker OOM does not need to take the whole master heap first.</li>
+      <li>Prefer <strong>Redis</strong> queue/cache when running more than one node; keep queue concurrency bounded.</li>
+      <li>Keep <strong><code>privileged_apps</code></strong> and <code>platform</code> grants minimal — a privileged app can disrupt the control plane.</li>
+      <li><strong>Untrusted</strong> or hostile tenants: <strong>one process/container per trust domain</strong> with OS CPU/memory/network quotas — do not co-locate them with sensitive apps on a shared Gingee process (see §2 and §10 “Required if any app is untrusted”).</li>
+      <li>Watch logs for <code>[unhandledRejection]</code> (continue) and <code>[uncaughtException]</code> (process will exit after drain) — treat the latter as a hard incident and restart via your supervisor (PM2/systemd/K8s).</li>
+    </ol>
+    <p><strong>What the engine already does</strong></p>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">Event</th>
+          <th align="left">Behavior</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">Awaited handler throw / reject</td>
+          <td align="left">HTTP <strong>500</strong> (if headers not sent)</td>
+        </tr>
+        <tr>
+          <td align="left">Detached <code>unhandledRejection</code></td>
+          <td align="left">Logged; process <strong>stays up</strong></td>
+        </tr>
+        <tr>
+          <td align="left">Sync <code>uncaughtException</code></td>
+          <td align="left">Logged; graceful shutdown; <strong><code>exit(1)</code></strong></td>
+        </tr>
+        <tr>
+          <td align="left">Over concurrency</td>
+          <td align="left"><strong>503</strong></td>
+        </tr>
+        <tr>
+          <td align="left">Isolation worker crash (when enabled)</td>
+          <td align="left">Worker may restart; master can continue</td>
+        </tr>
+      </tbody>
+    </table>
     <h3 id="recommended-for-production-cooperative-multi-app"><a class="anchor" aria-hidden="true" tabindex="-1" href="#recommended-for-production-cooperative-multi-app"><span class="octicon octicon-link"></span></a>Recommended for production (cooperative multi-app)</h3>
     <ol>
       <li>Run Gingee as a <strong>non-root</strong> OS user with write access only to intended dirs (<code>web/</code>, <code>settings/</code>, <code>logs/</code>, <code>backups/</code>, <code>temp/</code>).</li>
@@ -594,7 +660,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         5b. Treat <strong>Glade Logs</strong> as admin-only: server and app log files may contain secrets or payloads; do not expose Glade publicly.
       </li>
       <li>Prefer <strong>Redis</strong> for cache when running more than one node.</li>
-      <li>Put TLS at reverse proxy or Gingee HTTPS; do not expose Glade to the public internet without strong auth and network restriction.</li>
+      <li>Put TLS at reverse proxy or Gingee HTTPS; do not expose Glade to the public internet without strong auth and network restriction.<br>7b. <strong>Glade CSRF:</strong> Mutating Glade APIs require <code>X-CSRF-Token</code> (session-bound; double-submit cookie <code>glade_csrf</code> Path=/glade). Same-site sibling apps cannot read that cookie. For hostile multi-app hosts, run Glade on a <strong>separate host/port</strong> and set <code>GLADE_ALLOWED_ORIGINS</code> in Glade <code>app.json</code> <code>env</code> if needed.<br>7c. <strong>Glade login rate limit:</strong> Failed logins are throttled by IP and username (cache-backed; default 5 fails / 15 minutes → 429). Password is set at <strong><code>gingee-cli init</code></strong> — rotate with <code>reset-pwd</code> if compromised (see <a href="./glade-admin.md">Glade Admin</a>).</li>
       <li>Treat <strong><code>app.json</code> secrets</strong> as sensitive; restrict backups and who can download <code>.gin</code> exports.</li>
       <li>Leave <strong><code>box.allowed_modules</code></strong> empty unless you fully understand the escape hatch.</li>
       <li>Review every new <code>.gin</code>’s <code>pmft.json</code> before production grant.</li>
@@ -616,6 +682,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       <li>Do not store long-lived secrets in client-visible responses.</li>
       <li>Respect <code>$g.request.signal</code> / timeouts for long work; offload heavy work with <code>require('queue')</code> or scheduler <code>target.type: "queue"</code>.</li>
       <li>Never assume another app’s BOX or server <code>settings/</code> is readable.</li>
+      <li>Read <strong>§10 How not to take down the node</strong> — avoid sync CPU spin and unbounded memory; do not treat the sandbox as an availability boundary.</li>
     </ol>
     <hr>
     <h2 id="12-explicit-non-goals-current-platform"><a class="anchor" aria-hidden="true" tabindex="-1" href="#12-explicit-non-goals-current-platform"><span class="octicon octicon-link"></span></a>12. Explicit non-goals (current platform)</h2>
@@ -623,14 +690,15 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <ul>
       <li>Full hostile multi-tenant isolation on one host (even with process isolation)</li>
       <li>Formal verification of the sandbox</li>
-      <li>Built-in WAF, CSRF framework, or global end-user SSO</li>
-      <li>Perfect SSRF immunity under DNS rebinding (baseline <code>egress</code> policy is on by default; orchestrator network policy still required for hostile tenants)</li>
+      <li>Built-in WAF or global end-user SSO (Glade admin has <strong>CSRF + Origin</strong> checks; app authors still own their own CSRF)</li>
+      <li>Perfect SSRF immunity in every edge case (baseline <code>egress</code> + <strong>connect-time DNS pin</strong> is on by default; orchestrator network policy still required for hostile tenants)</li>
       <li>Multi-tenant billing isolation or noisy-neighbor SLAs</li>
-      <li>Guaranteed preemption of malicious infinite loops in the <strong>master</strong> process</li>
+      <li>Guaranteed preemption of malicious infinite loops in the <strong>master</strong> process (see §10 — use isolation / separate processes)</li>
+      <li>Keeping the process alive after sync <strong><code>uncaughtException</code></strong> (Gingee logs, drains, and <strong>exits</strong> — supervisors should restart)</li>
       <li>Full <strong>cgroups v2</strong> / Windows <strong>Job Objects</strong> managed inside Gingee (orchestrator still required for hard multi-tenant quotas)</li>
     </ul>
     <p>These may appear on the roadmap (cluster, OpenTelemetry, vault/KMS, deeper OS quotas); until shipped and documented, treat them as <strong>absent</strong>.</p>
-    <p><strong>Already shipped (not non-goals):</strong> process-wide <strong>Prometheus</strong> scrapes (<code>metrics</code>), <strong>JSONL audit</strong> for permissions/lifecycle (<code>audit</code>), <strong>opt-in process isolation</strong> for server scripts (<code>isolation</code> — child process per app or group; buffered + SSE; auto-restart; <strong><code>worker_limits</code></strong>), <strong>opt-in WebSockets</strong> on the master (permission-gated; multi-tenant rooms; optional <strong>Redis fan-out</strong>), <strong>scheduler</strong> with optional Redis <strong>coordination</strong>, and a <strong>background job queue</strong> (<code>queue</code> — memory/redis, retries, DLQ, Glade live jobs + DLQ admin, CRON handoff, Glade <strong>Schedules / Run now</strong>) — see <a href="./server-config.md">Server Config</a>. These improve observability, non-repudiation, crash containment, realtime, and deferred work; they do <strong>not</strong> replace container-per-trust-domain for hostile multi-tenant hosting.</p>
+    <p><strong>Already shipped (not non-goals):</strong> process-wide <strong>Prometheus</strong> scrapes (<code>metrics</code>), <strong>JSONL audit</strong> for permissions/lifecycle (<code>audit</code>), <strong>opt-in process isolation</strong> for server scripts (<code>isolation</code> — child process per app or group; buffered + SSE; auto-restart; <strong><code>worker_limits</code></strong>; cancel IPC on request timeout), <strong>opt-in WebSockets</strong> on the master (permission-gated; multi-tenant rooms; optional <strong>Redis fan-out</strong>), <strong>scheduler</strong> with optional Redis <strong>coordination</strong> and abort-on-timeout, <strong>egress</strong> with DNS connect pin, <strong>path jails with realpath</strong>, and a <strong>background job queue</strong> (<code>queue</code> — memory/redis, retries, DLQ, visibility reclaim, Glade live jobs + DLQ admin) — see <a href="./server-config.md">Server Config</a>. Glade admin has <strong>CSRF</strong>, <strong>login rate limit</strong>, and session cookie hardening. These improve observability, non-repudiation, crash containment, realtime, and deferred work; they do <strong>not</strong> replace container-per-trust-domain for hostile multi-tenant hosting.</p>
     <hr>
     <h2 id="13-mapping-to-critical-assessment-p0"><a class="anchor" aria-hidden="true" tabindex="-1" href="#13-mapping-to-critical-assessment-p0"><span class="octicon octicon-link"></span></a>13. Mapping to critical assessment P0</h2>
     <table>

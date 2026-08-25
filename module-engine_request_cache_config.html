@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>utils - Documentation</title>
+    <title>engine/request/cache_config - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">utils</h1>
+    <h1 class="page-title">engine/request/cache_config</h1>
     
 
     
@@ -58,10 +58,7 @@
         <div class="container-overview">
         
             
-                <div class="description usertext">A collection of utility functions for various tasks.
-This module provides functions for generating random data, validating inputs, manipulating strings, and more.
-It abstracts common tasks into reusable functions, making it easier to write clean and maintainable code.
-It is particularly useful for tasks that require randomization, validation, or string manipulation.</div>
+                <div class="description usertext">Compile and match app.json cache.no_cache_regex lists;cache app web/box realpaths for jail checks.Engine-internal — refreshed on app register / reload.</div>
             
 
             
@@ -73,10 +70,7 @@ It is particularly useful for tasks that require randomization, validation, or s
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li>A collection of utility functions for various tasks.
-This module provides functions for generating random data, validating inputs, manipulating strings, and more.
-It abstracts common tasks into reusable functions, making it easier to write clean and maintainable code.
-It is particularly useful for tasks that require randomization, validation, or string manipulation.</li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li>Compile and match app.json cache.no_cache_regex lists;cache app web/box realpaths for jail checks.Engine-internal — refreshed on app register / reload.</li></ul></dd>
     
 
     
@@ -157,27 +151,20 @@ It is particularly useful for tasks that require randomization, validation, or s
      
 
     
-        <h3 class="subsection-title">Namespaces</h3>
 
-        <dl>
-            <dt><a href="module-utils.misc.html">misc</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-utils.rnd.html">rnd</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-utils.string.html">string</a></dt>
-            <dd></dd>
-        </dl>
     
 
     
-        <h3 class="subsection-title">Members</h3>
+        <h3 class="subsection-title">Methods</h3>
 
         
             
-<h4 class="name" id="~validate"><span class="type-signature type-signature-inner">(inner) </span>validate<span class="type-signature"></span></h4>
 
+    
+
+    <h4 class="name" id="~attachAppPathReals"><span class="type-signature type-signature-inner">(inner) </span>attachAppPathReals<span class="signature">(app)</span><span class="type-signature"></span></h4>
+
+    
 
 
 
@@ -185,9 +172,7 @@ It is particularly useful for tasks that require randomization, validation, or s
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li>A collection of validation utilities for common data types.
-Provides functions to check if a string is a valid email, URL, phone number, and more.
-These functions help ensure that data conforms to expected formats, making it easier to validate user input.</li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li>Cache realpath-expanded app web/box roots (refresh on reload).Candidates are still realpath-expanded on each jail check (H12).</li></ul></dd>
     
 
     
@@ -227,11 +212,73 @@ These functions help ensure that data conforms to expected formats, making it ea
 
 
 
-<div class="description usertext">
-    A collection of validation utilities for common data types.
-Provides functions to check if a string is a valid email, URL, phone number, and more.
-These functions help ensure that data conforms to expected formats, making it easier to validate user input.
-</div>
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>app</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -241,8 +288,663 @@ These functions help ensure that data conforms to expected formats, making it ea
 
 
         
+            
+
     
 
+    <h4 class="name" id="~attachCompiledCacheRegex"><span class="type-signature type-signature-inner">(inner) </span>attachCompiledCacheRegex<span class="signature">(app)</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Normalize cache config nested objects and attach compiled regex lists on the app.Also refreshes app web/box realpath caches. Call after loading/reloading app.json.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>app</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">live app registry entry (`app.config.cache`)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    app.compiledCacheRegex
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~compileNoCacheRegex"><span class="type-signature type-signature-inner">(inner) </span>compileNoCacheRegex<span class="signature">(patterns)</span><span class="type-signature"> &rarr; {Array.&lt;RegExp>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Compile string patterns to RegExp[]. Invalid patterns are skipped.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>patterns</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+|
+
+<span class="param-type">undefined</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;RegExp></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~matchesNoCache"><span class="type-signature type-signature-inner">(inner) </span>matchesNoCache<span class="signature">(compiled, url)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>compiled</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;RegExp></span>
+|
+
+<span class="param-type">undefined</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~resolveCompiledCacheRegex"><span class="type-signature type-signature-inner">(inner) </span>resolveCompiledCacheRegex<span class="signature">(app, cacheConfig)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Prefer app.compiledCacheRegex; fall back to compiling from cacheConfig (tests / edge).</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>app</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cacheConfig</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">app.config.cache shape</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
     
 
     
@@ -262,7 +964,7 @@ These functions help ensure that data conforms to expected formats, making it ea
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Tue Aug 25 2026 14:39:07 GMT+0530 (India Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Tue Aug 25 2026 14:39:06 GMT+0530 (India Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

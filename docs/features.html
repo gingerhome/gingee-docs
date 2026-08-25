@@ -108,7 +108,14 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       <li>
         <p>
           <strong>Secure Sandbox Execution</strong>
-          Every server script runs in a secure, isolated environment. This prevents common vulnerabilities like path traversal and protects the main server process from errors or crashes in application code.
+          Every server script runs in a secure, isolated environment. This prevents common vulnerabilities like path traversal and protects the main server process from errors or crashes in application code. When <code>app.json</code> → <code>cache.server.enabled</code> is true, Gingee reuses sandboxed <strong>module instances</strong> (box scripts and <code>box.local_modules</code>) across requests—still invoking the exported handler each time—while preserving the same permission and path jail rules. Disable server cache or use <code>no_cache_regex</code> for live-edit paths; <code>reloadApp</code> drops the instance cache for that app. Bare <code>$g</code> in box code is request-local (ALS); keep <code>gingee(async ($g) => …)</code> on entries.
+          <strong>Errors:</strong> the HTTP request path catches failures of the <strong>handler promise</strong> (<code>await script()</code> / <code>await gingee(...)</code>) and returns <strong>500</strong> when headers are not yet sent. <strong>Detached</strong> async work that is not awaited is <strong>not</strong> part of that promise: an unhandled rejection is logged (<code>[unhandledRejection]</code>) and the <strong>process keeps running</strong>. Sync <strong><code>uncaughtException</code></strong> is logged (<code>[uncaughtException]</code>, optional ALS app name), the engine attempts <strong>graceful shutdown</strong>, then <strong><code>process.exit(1)</code></strong> — do not assume the process is healthy after a sync fatal. Prefer <code>await</code>, <code>.catch</code>, or the <strong><code>queue</code></strong> module for background side effects. See <a href="./threat-model.md">Threat Model</a> → <em>How not to take down the node</em>.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Response compression</strong>
+          With <code>gingee.json</code> → <code>content_encoding.enabled</code>, static files may be served from a <strong>pre-gzipped</strong> server-cache entry, and <code>$g.response.send</code> gzip when the raw body is at least <code>content_encoding.size_threshold</code> bytes (default <strong>1024</strong>) and the client sends <code>Accept-Encoding: gzip</code>.
         </p>
       </li>
       <li>
@@ -173,6 +180,12 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       </li>
       <li>
         <p>
+          <strong>Outbound Messaging (<code>messaging</code> Module)</strong>
+          Send SMS/MMS/WhatsApp through a provider adapter (Twilio in v1, plus <code>mock</code> and <code>console</code> loggers for local dev). Set <code>channel: 'whatsapp'</code> for WhatsApp (optional <code>whatsapp_from</code> in config); use <code>contentSid</code> / <code>contentVariables</code> for Twilio Content Templates. Config is a single object in <code>app.json</code> (optional defaults in <code>gingee.json</code>). Apps call <code>messaging.send(message)</code> or <code>messaging.sendWithConfig(runtimeConfig, message)</code> for a one-transaction override. Requires the <code>messaging</code> permission. Sample app: <strong><code>ginbon</code></strong> (<code>/ginbon/</code> — contacts, templates, compose with SMS/MMS/WhatsApp, history).
+        </p>
+      </li>
+      <li>
+        <p>
           <strong>Generative AI (<code>ai</code> Module)</strong>
           Chat, streaming completions (<code>chatStream</code>), multimodal image/file parts, document parsing/OCR, and content moderation behind a provider adapter (<code>mock</code>, <code>gemini</code>; <code>xai</code> planned). Single hybrid config (<code>gingee.json</code> / <code>app.json</code>) with optional per-call <code>{ config }</code> override. Streaming apps use <code>$g.response.startStream</code> / <code>writeSSE</code> / <code>endStream</code>. Requires the <code>ai</code> permission.
         </p>
@@ -218,19 +231,19 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       <li>
         <p>
           <strong>Audit Trail:</strong>
-          Append-only JSONL log (<code>audit.path</code>, default <code>logs/audit.jsonl</code>) for permission grants and app lifecycle (install, upgrade, reload, delete, rollback). Complements application request logs.
+          Append-only JSONL log (<code>audit.path</code>, default <code>logs/audit.jsonl</code>) for permission grants, app lifecycle (install, upgrade, reload, delete, rollback), scheduler Run now, queue DLQ retry/discard, and log list/read metadata. Complements application request logs.
         </p>
       </li>
       <li>
         <p>
           <strong>Optional feature packages:</strong>
-          Heavy or specialized npm packages ship as <strong><code>optionalDependencies</code></strong>: <strong><code>sharp</code></strong> (image), non-SQLite SQL drivers (<code>pg</code>, <code>mysql2</code>, <code>mssql</code>, <code>oracledb</code>), chart/canvas, <code>pdfmake</code>, SendGrid, and Gemini SDK. A normal <code>npm install</code> still tries to install them, but a failed native build <strong>does not fail the whole install</strong>. For a <strong>slimmer</strong> tree use <code>npm install --omit=optional</code>, then add only what you need (<code>npm install sharp pg pdfmake</code>, etc.). Missing packages surface as <code>FEATURE_NOT_INSTALLED</code> when an app actually uses that feature. SQLite, console email, and mock AI remain available without optionals.
+          Heavy or specialized npm packages ship as <strong><code>optionalDependencies</code></strong>: <strong><code>sharp</code></strong> (image), non-SQLite SQL drivers (<code>pg</code>, <code>mysql2</code>, <code>mssql</code>, <code>oracledb</code>), chart/canvas, <code>pdfmake</code>, SendGrid, Twilio, and Gemini SDK. A normal <code>npm install</code> still tries to install them, but a failed native build <strong>does not fail the whole install</strong>. For a <strong>slimmer</strong> tree use <code>npm install --omit=optional</code>, then add only what you need (<code>npm install sharp pg pdfmake twilio</code>, etc.). Missing packages surface as <code>FEATURE_NOT_INSTALLED</code> when an app actually uses that feature. SQLite, console email, mock messaging, and mock AI remain available without optionals.
         </p>
       </li>
       <li>
         <p>
           <strong>Process isolation (opt-in):</strong>
-          With <code>isolation.mode: "process"</code>, selected apps run server scripts in a <strong>child process</strong> (IPC). Public HTTP ports stay on the master. Privileged apps (e.g. Glade) stay in-process. Supports <strong>buffered</strong> and <strong>SSE</strong> responses (including AI streams), <strong>solo workers</strong> (<code>isolation.apps</code> / <code>app.json</code>) or <strong>isolation groups</strong> (shared worker—group membership alone is enough; no duplicate <code>apps</code> list required), <strong>auto-restart</strong> with backoff after unexpected crash, and worker-side re-init of <code>ai</code> / <code>email</code> from <code>app.json</code>. See <a href="./server-config.md">Server Config</a> → <code>isolation</code>.
+          With <code>isolation.mode: "process"</code>, selected apps run server scripts in a <strong>child process</strong> (IPC). Public HTTP ports stay on the master. Privileged apps (e.g. Glade) stay in-process. Supports <strong>buffered</strong> and <strong>SSE</strong> responses (including AI streams), <strong>solo workers</strong> (<code>isolation.apps</code> / <code>app.json</code>) or <strong>isolation groups</strong> (shared worker—group membership alone is enough; no duplicate <code>apps</code> list required), <strong>auto-restart</strong> with backoff after unexpected crash, <strong>request-timeout cancel</strong> (IPC + AbortSignal; optional worker kill), and worker-side re-init of <code>ai</code> / <code>email</code> / <code>messaging</code> from <code>app.json</code>. See <a href="./server-config.md">Server Config</a> → <code>isolation</code>.
         </p>
       </li>
       <li>
@@ -245,11 +258,23 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
           Enqueue deferred work with <code>require('queue').add(name, payload)</code> (permission <strong><code>queue</code></strong>). Handlers under <code>box/jobs/{name}.js</code> receive <code>$g.queue</code> (<code>id</code>, <code>payload</code>, <code>attempt</code>). Drivers: <strong>memory</strong> (default, single-node) or <strong>redis</strong> (multi-node, durable). Retries with backoff; exhausted jobs go to a <strong>dead-letter queue (DLQ)</strong>. <strong>Glade</strong> <strong>Queue / DLQ</strong>: live jobs (running/waiting/pending/delayed, auto-refresh) and DLQ (retry/discard). CRON may use <code>target.type: "queue"</code>. See <a href="./server-config.md">Server Config</a> → <code>queue</code>.
         </p>
       </li>
+      <li>
+        <p>
+          <strong>Module override (permission <code>module_override</code>):</strong>
+          Trusted apps may call <code>$g.overrideModule(specifier, boxRelativePath)</code> so that for the rest of the request matching <code>require(...)</code> (protected/other bare names, relative or box-root paths) loads an in-box wrapper. Restricted/forbidden names cannot be overridden. Wrappers use normal jailing; override map is off for the wrapper tree (no recursion). Sample: <strong><code>web/appsandboxtest/</code></strong> (full matrix + deny cases). See <a href="./permissions-guide.md">Permissions Guide</a> → Module overrides.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Project local modules (<code>box.local_modules</code>):</strong>
+          Server-wide sandboxed require roots for project-owned libraries when Gingee is installed under <code>node_modules</code>. <strong>Default is <code>[]</code></strong> (opt-in). Configure e.g. <code>["./local_modules"]</code>; <code>.js</code> only; platform <code>modules/</code> always wins over local roots; not part of <code>.gin</code> app packages. Included in the per-app sandboxed <strong>instance cache</strong> when <code>cache.server</code> is on. Samples: <strong><code>web/appsandboxtest/</code></strong> (<code>sandbox_kit</code>), <strong><code>web/perftest/</code></strong> (<code>mylib/store</code>). See <a href="./server-config.md">Server Config</a> → <strong>box.local_modules</strong>.
+        </p>
+      </li>
     </ul>
     <ul>
       <li>
         <strong>Application Startup Hooks</strong>
-        Apps can define <code>startup_scripts</code> in their <code>app.json</code> to run one-time initialization logic, such as database schema migrations or cache warming, when the server starts or after an app is installed/upgraded.
+        Apps can define <code>startup_scripts</code> in their <code>app.json</code> to run one-time initialization logic, such as database schema migrations or cache warming, when the server starts or after an app is installed/upgraded. A failed startup script prevents <strong>that app</strong> from being registered (server and other apps continue).
       </li>
     </ul>
     <h2 id="app-module-library"><a class="anchor" aria-hidden="true" tabindex="-1" href="#app-module-library"><span class="octicon octicon-link"></span></a>App Module Library</h2>
@@ -258,7 +283,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <ul>
       <li>
         <strong><code>gingee</code></strong>
-        The core middleware and context provider. It provides the <code>$g</code> global object (<code>$g.request</code>, <code>$g.response</code>, etc.) to all server scripts and handles automatic request body parsing.
+        The core middleware and context provider. Entry scripts use <code>await gingee(async ($g) => { … })</code>. Inside that handler, bare <code>$g</code> / <code>globalThis.$g</code> is also available to <code>require</code>d box modules (live, request-local Proxy). Handles automatic request body parsing.
       </li>
       <li>
         <strong><code>cache</code></strong>
@@ -276,16 +301,20 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         Transactional email via provider adapters (<code>sendgrid</code>, <code>console</code>). Config from <code>gingee.json</code> / <code>app.json</code>, plus <code>sendWithConfig</code> for per-transaction overrides. Permission-protected.
       </li>
       <li>
+        <strong><code>messaging</code></strong>
+        Outbound SMS/MMS/WhatsApp via provider adapters (<code>mock</code>, <code>console</code>, <code>twilio</code>). Same single-config + <code>send</code> / <code>sendWithConfig</code> pattern as <code>email</code>; WhatsApp via <code>channel</code> + optional Content Templates. Permission-protected. Sample: <strong><code>web/ginbon/</code></strong>.
+      </li>
+      <li>
         <strong><code>ai</code></strong>
         Generative AI (chat, streaming <code>chatStream</code>, multimodal parts, document parse/OCR, content moderation). Providers: <code>mock</code>, <code>gemini</code> (v1); <code>xai</code> (Grok) planned P1. Permission-protected; per-call config override supported.
       </li>
       <li>
         <strong><code>fs</code></strong>
-        A secure, virtualized filesystem wrapper. Jails all file and folder operations to an app's private <code>box</code> or public <code>web</code> scope, preventing path traversal attacks.
+        A secure, virtualized filesystem wrapper. Jails all file and folder operations to an app's private <code>box</code> or public <code>web</code> scope, preventing path traversal attacks. Includes read/write helpers, <strong><code>readJSON</code> / <code>writeJSON</code></strong> (sync and async), directory listing (<code>readdir</code>, <code>listFiles</code>, <code>listDirs</code>), recursive <code>walk</code> (<code>includeDirs</code> / <code>maxDepth</code>), and <code>stat</code>. Relative paths (no leading <code>/</code>) resolve to the executing gbox script directory; leading <code>/</code> is scope-root.
       </li>
       <li>
         <strong><code>httpclient</code></strong>
-        A powerful wrapper for making external HTTP(S) requests. It handles redirects, HTTPS, and intelligently processes response bodies into strings or buffers.
+        A powerful wrapper for making external HTTP(S) requests: <strong><code>get</code></strong>, <strong><code>post</code></strong>, <strong><code>put</code></strong>, <strong><code>patch</code></strong>, and <strong><code>delete</code></strong>. Body-bearing methods share <code>postType</code> content types (JSON, form, text, XML, multipart). It handles redirects, HTTPS, egress/SSRF policy, outbound timeouts, and intelligently processes response bodies into strings or buffers.
       </li>
       <li>
         <strong><code>formdata</code></strong>
@@ -327,7 +356,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <ul>
       <li>
         <strong><code>auth</code></strong>
-        An authentication module for managing user sessions. Its first implementation provides a complete, configurable toolkit for creating and verifying JSON Web Tokens (JWT).
+        JWT toolkit (<code>auth.jwt.create</code> / <code>verify</code>): HS256, <code>exp</code>/<code>iat</code>, optional <strong><code>iss</code></strong>, secret from app <code>jwt_secret</code> or server <code>gingee.json</code> → <code>jwt.secret</code> (supports <code>env:</code> / <code>file:</code> refs). Per-call <code>{ secret, iss }</code> overrides allowed.
       </li>
       <li>
         <strong><code>crypto</code></strong>

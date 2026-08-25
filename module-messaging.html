@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>utils - Documentation</title>
+    <title>messaging - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">utils</h1>
+    <h1 class="page-title">messaging</h1>
     
 
     
@@ -58,10 +58,17 @@
         <div class="container-overview">
         
             
-                <div class="description usertext">A collection of utility functions for various tasks.
-This module provides functions for generating random data, validating inputs, manipulating strings, and more.
-It abstracts common tasks into reusable functions, making it easier to write clean and maintainable code.
-It is particularly useful for tasks that require randomization, validation, or string manipulation.</div>
+                <div class="description usertext">Outbound messaging (SMS, MMS, WhatsApp, etc.) for Gingee apps using a provider adapter pattern (similar to `db`, `cache`, `email`, and `ai`).
+
+<b>Configuration (single config, no named profiles):</b>
+- Optional server defaults: `gingee.json` → `messaging`
+- Optional app config: `app.json` → `messaging` (overrides server for that app)
+- Runtime override: <a href="module-messaging.html#.sendWithConfig"><code>module:messaging.sendWithConfig</code></a> merges on top for one send only
+- Twilio WhatsApp: set message `channel: 'whatsapp'` (optional config `whatsapp_from`); use `contentSid` / `contentVariables` for approved templates
+
+<b>Providers (v1):</b> `mock` / `console` (log only), `twilio` (Twilio Programmable Messaging — SMS/MMS/WhatsApp)
+
+<b>IMPORTANT:</b> Requires explicit permission to use the module (`messaging`). See docs/permissions-guide for more details.</div>
             
 
             
@@ -73,10 +80,17 @@ It is particularly useful for tasks that require randomization, validation, or s
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li>A collection of utility functions for various tasks.
-This module provides functions for generating random data, validating inputs, manipulating strings, and more.
-It abstracts common tasks into reusable functions, making it easier to write clean and maintainable code.
-It is particularly useful for tasks that require randomization, validation, or string manipulation.</li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li>Outbound messaging (SMS, MMS, WhatsApp, etc.) for Gingee apps using a provider adapter pattern (similar to `db`, `cache`, `email`, and `ai`).
+
+<b>Configuration (single config, no named profiles):</b>
+- Optional server defaults: `gingee.json` → `messaging`
+- Optional app config: `app.json` → `messaging` (overrides server for that app)
+- Runtime override: <a href="module-messaging.html#.sendWithConfig"><code>module:messaging.sendWithConfig</code></a> merges on top for one send only
+- Twilio WhatsApp: set message `channel: 'whatsapp'` (optional config `whatsapp_from`); use `contentSid` / `contentVariables` for approved templates
+
+<b>Providers (v1):</b> `mock` / `console` (log only), `twilio` (Twilio Programmable Messaging — SMS/MMS/WhatsApp)
+
+<b>IMPORTANT:</b> Requires explicit permission to use the module (`messaging`). See docs/permissions-guide for more details.</li></ul></dd>
     
 
     
@@ -157,37 +171,19 @@ It is particularly useful for tasks that require randomization, validation, or s
      
 
     
-        <h3 class="subsection-title">Namespaces</h3>
-
-        <dl>
-            <dt><a href="module-utils.misc.html">misc</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-utils.rnd.html">rnd</a></dt>
-            <dd></dd>
-        
-            <dt><a href="module-utils.string.html">string</a></dt>
-            <dd></dd>
-        </dl>
-    
 
     
         <h3 class="subsection-title">Members</h3>
 
         
             
-<h4 class="name" id="~validate"><span class="type-signature type-signature-inner">(inner) </span>validate<span class="type-signature"></span></h4>
+<h4 class="name" id="~messagingInstances"><span class="type-signature type-signature-inner, constant">(inner, constant) </span>messagingInstances<span class="type-signature"> :Map.&lt;string, {adapter: object, config: object}></span></h4>
 
 
 
 
 
 <dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li>A collection of validation utilities for common data types.
-Provides functions to check if a string is a valid email, URL, phone number, and more.
-These functions help ensure that data conforms to expected formats, making it easier to validate user input.</li></ul></dd>
     
 
     
@@ -227,13 +223,87 @@ These functions help ensure that data conforms to expected formats, making it ea
 
 
 
-<div class="description usertext">
-    A collection of validation utilities for common data types.
-Provides functions to check if a string is a valid email, URL, phone number, and more.
-These functions help ensure that data conforms to expected formats, making it easier to validate user input.
-</div>
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Map.&lt;string, {adapter: object, config: object}></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~serverMessagingConfig"><span class="type-signature type-signature-inner">(inner) </span>serverMessagingConfig<span class="type-signature"> :object|null</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+        </li>
+    </ul>
 
 
 
@@ -243,6 +313,785 @@ These functions help ensure that data conforms to expected formats, making it ea
         
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".send"><span class="type-signature type-signature-static">(static) </span>send<span class="signature">(message)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Sends a message using the app's resolved config (app.json overrides gingee.json).</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const messaging = require('messaging');
+await messaging.send({
+  to: '+1234567890',
+  body: 'Your verification code is 123456.'
+});
+// WhatsApp freeform (within 24h session) or Content Template:
+await messaging.send({
+  channel: 'whatsapp',
+  to: '+1234567890',
+  contentSid: 'HXxxxxxxxx',
+  contentVariables: { '1': 'Ada' }
+});</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Outbound message.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Recipient phone number(s) (e.g. '+1234567890').</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>body</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Text body of the message (can also use message.text).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Plain text body alias.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>'sms'</code>
+                
+                </td>
+            
+
+            <td class="description last">`'sms'` (default; also `'mms'`) or `'whatsapp'`.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>from</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Override default sender number for this message only.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>messagingServiceSid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Twilio Messaging Service SID override.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mediaUrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">URL(s) for MMS / WhatsApp media attachments.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>contentSid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Twilio Content Template SID (WhatsApp / rich templates).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>contentVariables</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+|
+
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Template variables object (or JSON string).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>statusCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Webhook callback URL for delivery status updates.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    Result with messageId, provider, status, etc.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;object></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".sendWithConfig"><span class="type-signature type-signature-static">(static) </span>sendWithConfig<span class="signature">(configOverride, message)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Sends a single message using a runtime config that overrides both server and app.json
+settings for this transaction only. Does not persist or change the app's default adapter.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const messaging = require('messaging');
+await messaging.sendWithConfig(
+  { type: 'twilio', account_sid: 'ACxxx', auth_token: 'auth_xxx', from: '+19876543210' },
+  { to: '+1234567890', body: 'One-off notification' }
+);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>configOverride</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Partial or full messaging config (type, account_sid, auth_token, from, etc.).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Same shape as <a href="module-messaging.html#.send"><code>module:messaging.send</code></a>.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    Result with messageId, provider, status, etc.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;object></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
     
 
     

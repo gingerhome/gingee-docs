@@ -102,12 +102,13 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     `;s.appendChild(a)}i(t,e){this.dispatchEvent(new CustomEvent(t,{bubbles:true,composed:true,detail:e}))}}customElements.define("dark-mode",a);</script><div style="max-width: 960px; margin: 0 auto 60px auto; padding: 8px;max-width: 960px;" class="markdown-style">
     <h1 id="server-configuration-reference---the-gingeejson-file"><a class="anchor" aria-hidden="true" tabindex="-1" href="#server-configuration-reference---the-gingeejson-file"><span class="octicon octicon-link"></span></a>Server Configuration Reference - The gingee.json File</h1>
     <p>The <code>gingee.json</code> file is the master configuration file for the entire Gingee server instance. It resides in the root of your project and controls server behavior, caching policies, logging, and security settings that apply to all applications running on the platform.</p>
+    <p><strong>Runtime:</strong> Gingee requires <strong>Node.js ≥ 20.18.1</strong> (<code>package.json</code> → <code>engines.node</code>).</p>
     <p>Here is a comprehensive breakdown of all available properties.</p>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="2">  <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="3">    <span class="token property">"http"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">7070</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="4">    <span class="token property">"https"</span><span class="token operator">:</span> <span class="token punctuation">{</span> 
-</span><span class="code-line line-number" line="5">      <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> 
+</span><span class="code-line line-number" line="4">    <span class="token property">"https"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="5">      <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="6">      <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">7443</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="7">      <span class="token property">"key_file"</span><span class="token operator">:</span> <span class="token string">"./settings/ssl/key.pem"</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="8">      <span class="token property">"cert_file"</span><span class="token operator">:</span> <span class="token string">"./settings/ssl/cert.pem"</span>
@@ -209,7 +210,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
 </span><span class="code-line line-number" line="104">    <span class="token punctuation">}</span>
 </span><span class="code-line line-number" line="105">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="106">  <span class="token property">"max_body_size"</span><span class="token operator">:</span> <span class="token string">"10mb"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="107">  <span class="token property">"content_encoding"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="107">  <span class="token property">"content_encoding"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token property">"size_threshold"</span><span class="token operator">:</span> <span class="token number">1024</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="108">  <span class="token property">"logging"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="109">    <span class="token property">"level"</span><span class="token operator">:</span> <span class="token string">"info"</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="110">    <span class="token property">"rotation"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -218,15 +219,16 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
 </span><span class="code-line line-number" line="113">    <span class="token punctuation">}</span>
 </span><span class="code-line line-number" line="114">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="115">  <span class="token property">"box"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="116">    <span class="token property">"allowed_modules"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-</span><span class="code-line line-number" line="117">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="118">  <span class="token property">"privileged_apps"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-</span><span class="code-line line-number" line="119"><span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="116">    <span class="token property">"allowed_modules"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="117">    <span class="token property">"local_modules"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="118">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="119">  <span class="token property">"privileged_apps"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="120"><span class="token punctuation">}</span>
 </span></code><div onclick="copied(this)" data-code="{
   &#x22;server&#x22;: {
     &#x22;http&#x22;: { &#x22;enabled&#x22;: true, &#x22;port&#x22;: 7070 },
-    &#x22;https&#x22;: { 
-      &#x22;enabled&#x22;: false, 
+    &#x22;https&#x22;: {
+      &#x22;enabled&#x22;: false,
       &#x22;port&#x22;: 7443,
       &#x22;key_file&#x22;: &#x22;./settings/ssl/key.pem&#x22;,
       &#x22;cert_file&#x22;: &#x22;./settings/ssl/cert.pem&#x22;
@@ -328,7 +330,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     }
   },
   &#x22;max_body_size&#x22;: &#x22;10mb&#x22;,
-  &#x22;content_encoding&#x22;: { &#x22;enabled&#x22;: true },
+  &#x22;content_encoding&#x22;: { &#x22;enabled&#x22;: true, &#x22;size_threshold&#x22;: 1024 },
   &#x22;logging&#x22;: {
     &#x22;level&#x22;: &#x22;info&#x22;,
     &#x22;rotation&#x22;: {
@@ -337,7 +339,8 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     }
   },
   &#x22;box&#x22;: {
-    &#x22;allowed_modules&#x22;: []
+    &#x22;allowed_modules&#x22;: [],
+    &#x22;local_modules&#x22;: []
   },
   &#x22;privileged_apps&#x22;: []
 }
@@ -377,7 +380,8 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         <p><strong>Type:</strong> <code>object</code></p>
       </li>
       <li>
-        <p><strong>Description:</strong> Configures the server-wide, centralized caching provider. This cache is used for internal server tasks (like static file caching). Once configured, the same cache is also made available to applications via the <code>cache</code> module to cache app data.</p>
+        <p><strong>Description:</strong> Configures the server-wide, centralized caching provider. This cache is used for internal server tasks (like <strong>static file</strong> caching when an app enables <code>app.json</code> → <code>cache.server</code>). Once configured, the same provider is also available to applications via the <code>cache</code> module for app data.</p>
+        <p><strong>Not the same as script instance cache:</strong> box script <strong>transpile + sandboxed <code>module.exports</code> reuse</strong> is an <strong>in-process</strong> <code>gbox</code> Map controlled by each app’s <code>cache.server.enabled</code> / <code>no_cache_regex</code> (see <a href="./app-structure.md">App Structure</a> → Cache). It does <strong>not</strong> store script instances in Redis.</p>
       </li>
       <li>
         <p><strong><code>cache.provider</code></strong> (string):</p>
@@ -390,6 +394,13 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
               <li><code>"redis"</code>: Uses an external Redis server, enabling a shared, distributed cache for multi-node, horizontally-scaled deployments.</li>
             </ul>
           </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong><code>cache.fail_closed</code></strong> (boolean, optional):</p>
+        <ul>
+          <li><strong>Default:</strong> <code>true</code> when <code>provider</code> is <code>"redis"</code>; ignored for memory.</li>
+          <li><strong>Description:</strong> If Redis cannot be reached at boot and <code>fail_closed</code> is <strong>true</strong>, <strong>server startup fails</strong> (no silent in-process memory cache). Set to <strong><code>false</code></strong> only for local convenience — multi-node deployments would otherwise get <strong>node-local sessions</strong> and split-brain cache.</li>
         </ul>
       </li>
       <li>
@@ -410,13 +421,15 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     </ul>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token property">"cache"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="2">  <span class="token property">"provider"</span><span class="token operator">:</span> <span class="token string">"redis"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="3">  <span class="token property">"prefix"</span><span class="token operator">:</span> <span class="token string">"gingee:"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="4">  <span class="token property">"redis"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-</span><span class="code-line line-number" line="5">    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"env:REDIS_URL"</span>
-</span><span class="code-line line-number" line="6">  <span class="token punctuation">}</span>
-</span><span class="code-line line-number" line="7"><span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"fail_closed"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="4">  <span class="token property">"prefix"</span><span class="token operator">:</span> <span class="token string">"gingee:"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="5">  <span class="token property">"redis"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="6">    <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"env:REDIS_URL"</span>
+</span><span class="code-line line-number" line="7">  <span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="8"><span class="token punctuation">}</span>
 </span></code><div onclick="copied(this)" data-code="&#x22;cache&#x22;: {
   &#x22;provider&#x22;: &#x22;redis&#x22;,
+  &#x22;fail_closed&#x22;: true,
   &#x22;prefix&#x22;: &#x22;gingee:&#x22;,
   &#x22;redis&#x22;: {
     &#x22;url&#x22;: &#x22;env:REDIS_URL&#x22;
@@ -453,6 +466,19 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       <li><strong><code>api_key</code></strong> (string, optional): SendGrid API key when using <code>"sendgrid"</code>.</li>
       <li><strong><code>from</code></strong> / <strong><code>from_name</code></strong> (string, optional): Default sender identity.</li>
       <li><strong>Runtime override:</strong> App scripts may call <code>email.sendWithConfig(config, message)</code> to override server + app config for a single send.</li>
+    </ul>
+    <h3 id="messaging"><a class="anchor" aria-hidden="true" tabindex="-1" href="#messaging"><span class="octicon octicon-link"></span></a>messaging</h3>
+    <ul>
+      <li><strong>Type:</strong> <code>object</code> (optional)</li>
+      <li><strong>Description:</strong> Optional <strong>server-wide default</strong> for the outbound <code>messaging</code> module (SMS, MMS, WhatsApp). Each app may override this with <code>app.json</code> → <code>messaging</code>. Single config object. Apps need the <code>messaging</code> permission to call <code>require('messaging')</code>.</li>
+      <li><strong><code>type</code></strong> (string): Provider id — <code>"mock"</code> / <code>"console"</code> (log only) or <code>"twilio"</code>.</li>
+      <li><strong><code>account_sid</code></strong> (string, optional): Twilio Account SID when using <code>"twilio"</code>.</li>
+      <li><strong><code>auth_token</code></strong> (string, optional): Twilio Auth Token (or <code>api_key</code> + <code>api_secret</code>).</li>
+      <li><strong><code>from</code></strong> (string, optional): Default SMS/MMS sender phone number (e.g. <code>"+15551234567"</code>).</li>
+      <li><strong><code>whatsapp_from</code></strong> (string, optional): Default WhatsApp sender (E.164) when messages use <code>channel: "whatsapp"</code>.</li>
+      <li><strong><code>messaging_service_sid</code></strong> (string, optional): Default Twilio Messaging Service SID.</li>
+      <li><strong>Message API:</strong> <code>channel</code> (<code>sms</code> | <code>whatsapp</code>), optional <code>contentSid</code> / <code>contentVariables</code> for Twilio Content Templates. See <a href="./app-structure.md">App Structure</a> → Messaging.</li>
+      <li><strong>Runtime override:</strong> App scripts may call <code>messaging.sendWithConfig(config, message)</code> to override server + app config for a single send.</li>
     </ul>
     <h3 id="ai"><a class="anchor" aria-hidden="true" tabindex="-1" href="#ai"><span class="octicon octicon-link"></span></a>ai</h3>
     <ul>
@@ -686,7 +712,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         <tr>
           <td align="left"><code>dns_check</code></td>
           <td align="left"><code>true</code></td>
-          <td align="left">In <code>protected</code> mode, resolve hostnames and deny if any address is blocked.</td>
+          <td align="left">Resolve hostnames and deny if any address is blocked (<code>protected</code> and <code>allowlist</code>).</td>
         </tr>
         <tr>
           <td align="left"><code>max_redirects</code></td>
@@ -715,6 +741,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
       </tbody>
     </table>
+    <p><strong>Connect pin (DNS rebinding):</strong> When DNS validation yields addresses (or the URL uses a literal IP), <code>httpclient</code> and scheduler URL jobs attach a <strong>pinned <code>lookup</code></strong> so TCP connect uses only those pre-checked addresses. Redirect hops are re-resolved, re-checked, and re-pinned.</p>
     <p><strong>Examples:</strong></p>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token property">"egress"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"mode"</span><span class="token operator">:</span> <span class="token string">"protected"</span><span class="token punctuation">,</span> <span class="token property">"allow_cidrs"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"10.0.1.0/24"</span><span class="token punctuation">]</span> <span class="token punctuation">}</span>
 </span></code><div onclick="copied(this)" data-code="&#x22;egress&#x22;: { &#x22;mode&#x22;: &#x22;protected&#x22;, &#x22;allow_cidrs&#x22;: [&#x22;10.0.1.0/24&#x22;] }
@@ -778,7 +805,43 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       </tbody>
     </table>
     <p><strong>Literal values still work</strong> (dev): <code>"jwt_secret": "dev-only-secret"</code>.</p>
-    <p><strong>Examples of fields that commonly use refs:</strong> <code>jwt_secret</code>, <code>db[].password</code>, <code>email.api_key</code>, <code>ai.api_key</code>, <code>cache.redis.password</code>.</p>
+    <p><strong>Examples of fields that commonly use refs:</strong> <code>jwt_secret</code> (app), <code>jwt.secret</code> (server), <code>db[].password</code>, <code>email.api_key</code>, <code>ai.api_key</code>, <code>cache.redis.password</code>.</p>
+    <h3 id="jwt"><a class="anchor" aria-hidden="true" tabindex="-1" href="#jwt"><span class="octicon octicon-link"></span></a>jwt</h3>
+    <ul>
+      <li><strong>Type:</strong> <code>object</code> (optional)</li>
+      <li><strong>Description:</strong> Optional <strong>server-wide</strong> defaults for <code>require('auth').jwt</code> create/verify. Per-app <code>app.json</code> values override these. Useful as a shared fallback when an app omits <code>jwt_secret</code>. Prefer a dedicated secret per app in multi-app hosts.</li>
+    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">Key</th>
+          <th align="left">Default</th>
+          <th align="left">Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left"><code>secret</code></td>
+          <td align="left"><code>null</code></td>
+          <td align="left">HS256 signing secret. Supports <code>env:VAR</code> / <code>file:path</code> refs (resolved with the rest of <code>gingee.json</code>).</td>
+        </tr>
+        <tr>
+          <td align="left"><code>iss</code></td>
+          <td align="left"><code>null</code></td>
+          <td align="left">Optional issuer string. When set, <code>jwt.create</code> adds <code>iss</code> (unless the payload already has one) and <code>jwt.verify</code> requires a matching <code>iss</code>. When <code>null</code>/omitted, no issuer check.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Resolution order for the signing secret:</strong> <code>options.secret</code> (per call) → app <code>jwt_secret</code> or <code>jwt.secret</code> → server <code>jwt.secret</code>.<br><strong>Resolution order for issuer:</strong> <code>options.iss</code> → app <code>jwt_iss</code> or <code>jwt.iss</code> → server <code>jwt.iss</code>.</p>
+    <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token property">"jwt"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="2">  <span class="token property">"secret"</span><span class="token operator">:</span> <span class="token string">"env:GINGEE_JWT_SECRET"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"iss"</span><span class="token operator">:</span> <span class="token string">"gingee"</span>
+</span><span class="code-line line-number" line="4"><span class="token punctuation">}</span>
+</span></code><div onclick="copied(this)" data-code="&#x22;jwt&#x22;: {
+  &#x22;secret&#x22;: &#x22;env:GINGEE_JWT_SECRET&#x22;,
+  &#x22;iss&#x22;: &#x22;gingee&#x22;
+}
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
     <h3 id="metrics"><a class="anchor" aria-hidden="true" tabindex="-1" href="#metrics"><span class="octicon octicon-link"></span></a>metrics</h3>
     <ul>
       <li><strong>Type:</strong> <code>object</code> (optional)</li>
@@ -815,7 +878,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
       </tbody>
     </table>
-    <p><strong>Series (high level):</strong> HTTP request counts/durations (by app, kind, status class), concurrency reject counters, egress deny reasons, scheduler job run outcomes, WebSocket upgrade results / open connection gauges, in-flight gauges, process memory, app/job counts.</p>
+    <p><strong>Series (high level):</strong> HTTP request counts/durations (by app, kind, status class), concurrency reject counters, egress deny reasons, scheduler job run outcomes, WebSocket upgrade results / open connection gauges, queue enqueue/complete/fail/retry counters and duration histogram, in-flight gauges, process memory, app/job counts.</p>
     <p><strong>Scrape example (local):</strong></p>
     <pre class="language-bash"><code class="language-bash code-highlight"><span class="code-line line-number" line="1"><span class="token function">curl</span> <span class="token parameter variable">-s</span> http://127.0.0.1:7070/metrics
 </span></code><div onclick="copied(this)" data-code="curl -s http://127.0.0.1:7070/metrics
@@ -823,7 +886,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <h3 id="audit"><a class="anchor" aria-hidden="true" tabindex="-1" href="#audit"><span class="octicon octicon-link"></span></a>audit</h3>
     <ul>
       <li><strong>Type:</strong> <code>object</code> (optional)</li>
-      <li><strong>Description:</strong> Append-only <strong>JSONL</strong> audit trail for privileged platform actions: permission changes and app lifecycle (install, upgrade, reload, delete, rollback, register). Written by the engine when Glade / <code>platform</code> APIs mutate state—not request-level access logs.</li>
+      <li><strong>Description:</strong> Append-only <strong>JSONL</strong> audit trail for privileged platform actions. Written by the engine when Glade / <code>platform</code> APIs mutate state or access sensitive ops data—not full request-level access logs.</li>
     </ul>
     <table>
       <thead>
@@ -847,8 +910,20 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       </tbody>
     </table>
     <p>Each line is one JSON object, for example:</p>
-    <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span><span class="token property">"ts"</span><span class="token operator">:</span><span class="token string">"2026-07-18T12:00:00.000Z"</span><span class="token punctuation">,</span><span class="token property">"event"</span><span class="token operator">:</span><span class="token string">"permission.set"</span><span class="token punctuation">,</span><span class="token property">"actor"</span><span class="token operator">:</span><span class="token string">"glade"</span><span class="token punctuation">,</span><span class="token property">"app"</span><span class="token operator">:</span><span class="token string">"myapp"</span><span class="token punctuation">,</span><span class="token property">"details"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"previous"</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token string">"fs"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token property">"granted"</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token string">"fs"</span><span class="token punctuation">,</span><span class="token string">"db"</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
-</span></code><div onclick="copied(this)" data-code="{&#x22;ts&#x22;:&#x22;2026-07-18T12:00:00.000Z&#x22;,&#x22;event&#x22;:&#x22;permission.set&#x22;,&#x22;actor&#x22;:&#x22;glade&#x22;,&#x22;app&#x22;:&#x22;myapp&#x22;,&#x22;details&#x22;:{&#x22;previous&#x22;:[&#x22;fs&#x22;],&#x22;granted&#x22;:[&#x22;fs&#x22;,&#x22;db&#x22;]}}
+    <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="2">  <span class="token property">"ts"</span><span class="token operator">:</span> <span class="token string">"2026-07-18T12:00:00.000Z"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"event"</span><span class="token operator">:</span> <span class="token string">"permission.set"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="4">  <span class="token property">"actor"</span><span class="token operator">:</span> <span class="token string">"glade"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="5">  <span class="token property">"app"</span><span class="token operator">:</span> <span class="token string">"myapp"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="6">  <span class="token property">"details"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"previous"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"fs"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token property">"granted"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"fs"</span><span class="token punctuation">,</span> <span class="token string">"db"</span><span class="token punctuation">]</span> <span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="7"><span class="token punctuation">}</span>
+</span></code><div onclick="copied(this)" data-code="{
+  &#x22;ts&#x22;: &#x22;2026-07-18T12:00:00.000Z&#x22;,
+  &#x22;event&#x22;: &#x22;permission.set&#x22;,
+  &#x22;actor&#x22;: &#x22;glade&#x22;,
+  &#x22;app&#x22;: &#x22;myapp&#x22;,
+  &#x22;details&#x22;: { &#x22;previous&#x22;: [&#x22;fs&#x22;], &#x22;granted&#x22;: [&#x22;fs&#x22;, &#x22;db&#x22;] }
+}
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
     <table>
       <thead>
@@ -860,7 +935,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       <tbody>
         <tr>
           <td align="left"><code>event</code></td>
-          <td align="left">Stable name: <code>permission.set</code>, <code>app.install</code>, <code>app.upgrade</code>, <code>app.reload</code>, <code>app.delete</code>, <code>app.rollback</code>, <code>app.register</code></td>
+          <td align="left">Stable event name (see table below)</td>
         </tr>
         <tr>
           <td align="left"><code>actor</code></td>
@@ -868,11 +943,49 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
         <tr>
           <td align="left"><code>app</code></td>
-          <td align="left">Target application name</td>
+          <td align="left">Target application name (when applicable)</td>
         </tr>
         <tr>
           <td align="left"><code>details</code></td>
-          <td align="left">Event-specific payload (previous/granted permissions, versions, etc.)</td>
+          <td align="left">Event-specific payload (no raw log line bodies)</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">Event</th>
+          <th align="left">When</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left"><code>permission.set</code></td>
+          <td align="left">Permissions saved for an app</td>
+        </tr>
+        <tr>
+          <td align="left"><code>app.install</code> / <code>app.upgrade</code> / <code>app.reload</code> / <code>app.delete</code> / <code>app.rollback</code> / <code>app.register</code></td>
+          <td align="left">App lifecycle</td>
+        </tr>
+        <tr>
+          <td align="left"><code>scheduler.run_now</code></td>
+          <td align="left">Glade <strong>Run now</strong> (force schedule; bypasses multi-node coordination)</td>
+        </tr>
+        <tr>
+          <td align="left"><code>queue.dlq.retry</code></td>
+          <td align="left">DLQ job re-enqueued</td>
+        </tr>
+        <tr>
+          <td align="left"><code>queue.dlq.discard</code></td>
+          <td align="left">DLQ job discarded</td>
+        </tr>
+        <tr>
+          <td align="left"><code>logs.list</code></td>
+          <td align="left">Log file list (scope + count)</td>
+        </tr>
+        <tr>
+          <td align="left"><code>logs.read</code></td>
+          <td align="left">Log file tail/read (file name, filters, line counts — <strong>not</strong> line content)</td>
         </tr>
       </tbody>
     </table>
@@ -918,7 +1031,12 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         <tr>
           <td align="left"><code>request_timeout_ms</code></td>
           <td align="left"><code>120000</code></td>
-          <td align="left">Max wait for a worker script (buffered or stream) to finish.</td>
+          <td align="left">Max wait for a worker script (buffered or stream) to finish. On timeout the master sends <strong><code>cancel_request</code> IPC</strong>, ends the client with <strong>504</strong>, and aborts the worker-side <code>AbortSignal</code> (cooperative cancel for <code>httpclient</code> / long work).</td>
+        </tr>
+        <tr>
+          <td align="left"><code>kill_worker_on_request_timeout</code></td>
+          <td align="left"><code>false</code></td>
+          <td align="left">When <code>true</code>, also <strong>SIGTERM</strong> the worker after cancel (other in-flight requests on that worker die). Prefer cooperative cancel unless you need a hard kill.</td>
         </tr>
         <tr>
           <td align="left"><code>auto_restart</code></td>
@@ -1056,6 +1174,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       <li>Workers re-initialize process-local adapters (<code>ai</code>, <code>email</code>) from the app config snapshot so <code>app.json</code> AI/email config works in isolated apps (permissions still required).</li>
       <li><strong>Groups</strong> share one Node worker (density within a trust set); not hostile multi-tenant isolation.</li>
       <li>Unexpected worker exit triggers <strong>auto-restart</strong> with backoff (unless disabled or <code>restart_max</code> exceeded).</li>
+      <li><strong>Request timeout:</strong> master cancels via IPC + AbortSignal; optional <code>kill_worker_on_request_timeout</code> for hard kill.</li>
     </ul>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token property">"isolation"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="2">  <span class="token property">"mode"</span><span class="token operator">:</span> <span class="token string">"process"</span><span class="token punctuation">,</span>
@@ -1294,6 +1413,21 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
           <td align="left">Default folder under <code>box/</code> for job scripts.</td>
         </tr>
         <tr>
+          <td align="left"><code>visibility_timeout_ms</code></td>
+          <td align="left"><code>300000</code></td>
+          <td align="left"><strong>Redis only:</strong> claim lease (ms). If a worker dies mid-job, the claim is reclaimed after this and the job returns to the ready list. Long handlers should finish within this window (lease is refreshed when processing starts).</td>
+        </tr>
+        <tr>
+          <td align="left"><code>shutdown_drain_ms</code></td>
+          <td align="left"><code>30000</code></td>
+          <td align="left">Graceful shutdown: stop claiming, return local wait-queue claims to the driver, wait up to this many ms for in-flight jobs, then force-release remaining claims and disconnect.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>fail_closed</code></td>
+          <td align="left"><code>true</code></td>
+          <td align="left">When <code>driver</code> is <code>"redis"</code> and Redis is unreachable at boot: <strong><code>true</code></strong> aborts queue init (server boot fails) — no silent memory fallback. Set <strong><code>false</code></strong> only for local dev (multi-node would otherwise split jobs across node-local memory queues).</td>
+        </tr>
+        <tr>
           <td align="left"><code>redis</code></td>
           <td align="left">see defaults</td>
           <td align="left"><code>url</code> or <code>host</code>/<code>port</code>/<code>password</code>/<code>db</code>/<code>key_prefix</code> when <code>driver</code> is <code>redis</code>.</td>
@@ -1303,16 +1437,23 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token property">"queue"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="2">  <span class="token property">"enabled"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="3">  <span class="token property">"driver"</span><span class="token operator">:</span> <span class="token string">"redis"</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="4">  <span class="token property">"concurrency"</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="5">  <span class="token property">"redis"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"env:REDIS_URL"</span><span class="token punctuation">,</span> <span class="token property">"key_prefix"</span><span class="token operator">:</span> <span class="token string">"gingee:queue:"</span> <span class="token punctuation">}</span>
-</span><span class="code-line line-number" line="6"><span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="4">  <span class="token property">"fail_closed"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="5">  <span class="token property">"concurrency"</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="6">  <span class="token property">"visibility_timeout_ms"</span><span class="token operator">:</span> <span class="token number">300000</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="7">  <span class="token property">"shutdown_drain_ms"</span><span class="token operator">:</span> <span class="token number">30000</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="8">  <span class="token property">"redis"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"env:REDIS_URL"</span><span class="token punctuation">,</span> <span class="token property">"key_prefix"</span><span class="token operator">:</span> <span class="token string">"gingee:queue:"</span> <span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="9"><span class="token punctuation">}</span>
 </span></code><div onclick="copied(this)" data-code="&#x22;queue&#x22;: {
   &#x22;enabled&#x22;: true,
   &#x22;driver&#x22;: &#x22;redis&#x22;,
+  &#x22;fail_closed&#x22;: true,
   &#x22;concurrency&#x22;: 10,
+  &#x22;visibility_timeout_ms&#x22;: 300000,
+  &#x22;shutdown_drain_ms&#x22;: 30000,
   &#x22;redis&#x22;: { &#x22;url&#x22;: &#x22;env:REDIS_URL&#x22;, &#x22;key_prefix&#x22;: &#x22;gingee:queue:&#x22; }
 }
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+    <p><strong>Redis durability notes:</strong> Jobs use a ready list + delayed ZSET + <strong>processing ZSET</strong> (visibility leases). Claims are leased; crash/OOM of a node reclaims expired leases. Graceful process exit drains local wait/active claims back to Redis so other nodes can run them. <strong>Fail-closed</strong> is the default for redis driver so a dead Redis cannot silently partition the fleet onto per-node memory queues. Memory driver is still process-local and not crash-durable.</p>
     <p><strong>App (<code>app.json</code> optional):</strong></p>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token property">"queue"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="2">  <span class="token property">"jobs"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
@@ -1340,14 +1481,15 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
 };
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
     <p><strong>From a server script:</strong></p>
-    <pre class="language-javascript"><code class="language-javascript code-highlight"><span class="code-line line-number" line="1"><span class="token keyword">const</span> queue <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'queue'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</span><span class="code-line line-number" line="2"><span class="token keyword control-flow">await</span> queue<span class="token punctuation">.</span><span class="token method function property-access">add</span><span class="token punctuation">(</span><span class="token string">'echo'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">hello</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">delayMs</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token literal-property property">attempts</span><span class="token operator">:</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</span></code><div onclick="copied(this)" data-code="const queue = require(&#x27;queue&#x27;);
-await queue.add(&#x27;echo&#x27;, { hello: true }, { delayMs: 0, attempts: 3 });
+    <pre class="language-javascript"><code class="language-javascript code-highlight"><span class="code-line line-number" line="1"><span class="token keyword">const</span> queue <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"queue"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span><span class="code-line line-number" line="2"><span class="token keyword control-flow">await</span> queue<span class="token punctuation">.</span><span class="token method function property-access">add</span><span class="token punctuation">(</span><span class="token string">"echo"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">hello</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token literal-property property">delayMs</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token literal-property property">attempts</span><span class="token operator">:</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></code><div onclick="copied(this)" data-code="const queue = require(&#x22;queue&#x22;);
+await queue.add(&#x22;echo&#x22;, { hello: true }, { delayMs: 0, attempts: 3 });
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
     <p><strong>CRON → queue (multi-node friendly):</strong> schedule target <code>"type": "queue", "job": "nightly"</code> enqueues instead of running the heavy work inline. App needs both <code>scheduler</code> and <code>queue</code> permissions; server needs <code>scheduler.enabled</code> and <code>queue.enabled</code>.</p>
     <p><strong>Metrics:</strong> <code>gingee_queue_jobs_enqueued_total</code>, <code>_completed_total</code>, <code>_failed_total</code>, <code>_retried_total</code>, <code>gingee_queue_dlq_total</code> / <code>_retry_total</code> / <code>_discard_total</code>, histogram <code>gingee_queue_job_duration_seconds</code>.</p>
-    <p><strong>Admin (Glade):</strong> top menu <strong>Queue / DLQ</strong> — <strong>Live jobs</strong> (running/waiting on this node + pending/delayed in the driver; optional auto-refresh) and <strong>DLQ</strong> (retry/discard). App filter (3+ letters). APIs: <code>getQueueStats</code> / <code>listQueueLiveJobs</code> / <code>listQueueDlq</code> / <code>retryQueueDlqJob</code> / <code>discardQueueDlqJob</code> (<code>/glade/api/queue-*</code>). Memory live+DLQ is process-local; Redis pending/delayed/DLQ are shared.</p>
+    <p><strong>Admin (Glade):</strong> top menu <strong>Queue / DLQ</strong> — <strong>Live jobs</strong> (running/waiting on this node + pending/delayed/processing in the driver; optional auto-refresh) and <strong>DLQ</strong> (retry/discard). App filter (3+ letters). APIs: <code>getQueueStats</code> / <code>listQueueLiveJobs</code> / <code>listQueueDlq</code> / <code>retryQueueDlqJob</code> / <code>discardQueueDlqJob</code> (<code>/glade/api/queue-*</code>). Memory live+DLQ is process-local; Redis pending/delayed/DLQ are shared.</p>
+    <p><strong>DLQ atomicity (Redis):</strong> discard and retry use <strong>Lua scripts</strong> so concurrent Glade/admin actions cannot double-enqueue or delete a live job hash that is not on the DLQ. Memory driver claims DLQ entries synchronously (no await between check and remove) before re-enqueue.</p>
     <h3 id="optional-npm-feature-packages"><a class="anchor" aria-hidden="true" tabindex="-1" href="#optional-npm-feature-packages"><span class="octicon octicon-link"></span></a>Optional npm feature packages</h3>
     <p>Gingee keeps a <strong>core</strong> set of required dependencies (engine, SQLite, zip, auth crypto, etc.) and marks specialized packages as <strong><code>optionalDependencies</code></strong> in <code>package.json</code>:</p>
     <table>
@@ -1379,6 +1521,10 @@ await queue.add(&#x27;echo&#x27;, { hello: true }, { delayMs: 0, attempts: 3 });
           <td align="left"><code>@sendgrid/mail</code></td>
         </tr>
         <tr>
+          <td align="left">Twilio messaging</td>
+          <td align="left"><code>twilio</code> (^6.x)</td>
+        </tr>
+        <tr>
           <td align="left">Gemini AI</td>
           <td align="left"><code>@google/generative-ai</code></td>
         </tr>
@@ -1400,7 +1546,19 @@ await queue.add(&#x27;echo&#x27;, { hello: true }, { delayMs: 0, attempts: 3 });
     <ul>
       <li><strong>Type:</strong> <code>object</code></li>
       <li><strong>Description:</strong> Configures Gzip compression for responses.</li>
-      <li><strong><code>enabled</code></strong> (boolean): If <code>true</code>, Gingee will compress applicable responses (like HTML, CSS, JS, and JSON) if the client's browser indicates support for it via the <code>Accept-Encoding</code> header. This significantly reduces bandwidth usage.</li>
+      <li><strong><code>enabled</code></strong> (boolean): If <code>true</code>, and the client sends <code>Accept-Encoding: gzip</code>, Gingee compresses applicable responses (see below).</li>
+      <li><strong><code>size_threshold</code></strong> (number, optional):
+        <ul>
+          <li><strong>Default:</strong> <code>1024</code> (1 KiB).</li>
+          <li>Minimum <strong>raw</strong> body size in bytes before <strong>server script</strong> <code>$g.response.send(...)</code> will gzip. Below this size the body is sent uncompressed (no compress attempt — avoids per-request gzip CPU on tiny JSON). Set to <code>0</code> to gzip all script sends when the client accepts gzip.</li>
+        </ul>
+      </li>
+      <li>Behavior when enabled:
+        <ul>
+          <li><strong>Static files</strong> (HTML/CSS/JS/…): on cache miss, body is gzipped once and stored alongside the raw bytes in the server static cache (<code>gzipContent</code>); cache hits reuse the pre-gzipped buffer (no re-compress). Entries are cleared on <code>reloadApp</code>. URLs matching <code>cache.server.no_cache_regex</code> skip the static cache (still may gzip on the fly for that response). <code>size_threshold</code> does <strong>not</strong> apply to static.</li>
+          <li><strong>Server script</strong> <code>$g.response.send(...)</code>: JSON/text/Buffer bodies ≥ <code>size_threshold</code> are gzipped (<code>Vary: Accept-Encoding</code>). Streaming/<code>writeSSE</code> paths are unchanged.</li>
+        </ul>
+      </li>
     </ul>
     <h3 id="logging"><a class="anchor" aria-hidden="true" tabindex="-1" href="#logging"><span class="octicon octicon-link"></span></a>logging</h3>
     <p>An object that configures the server's logger.</p>
@@ -1441,22 +1599,82 @@ await queue.add(&#x27;echo&#x27;, { hello: true }, { delayMs: 0, attempts: 3 });
       <li><strong>Type:</strong> <code>object</code></li>
       <li><strong>Description:</strong> Configures the security settings for the <code>gbox</code> sandbox environment. App scripts run in a <strong>Node <code>vm</code> context</strong> without host <code>process</code> / real <code>global</code> access (see <a href="./threat-model.md">Threat Model</a>).</li>
       <li><strong><code>allowed_modules</code></strong> (array of strings): A whitelist of Node.js built-in modules that sandboxed scripts are allowed to <code>require()</code>. Dangerous modules (<code>child_process</code>, <code>vm</code>, host <code>node:fs</code>, etc.) are <strong>always forbidden</strong>. Prefer leaving this empty. Safe defaults already include <code>url</code>, <code>querystring</code>, and <code>mime-types</code>.</li>
-      <li><strong><code>allow_code_generation</code></strong> (boolean, optional):
+      <li><strong><code>local_modules</code></strong> (array of strings, optional):
         <ul>
-          <li><strong>Default:</strong> <code>true</code> (Instant Time to Joy — many UMD/minified libs such as Handlebars need <code>new Function</code> at load time).</li>
-          <li>When <code>true</code>, string <code>eval</code> / <code>Function</code> work <strong>inside the app vm only</strong>. Host <strong><code>process</code> remains unavailable</strong>; apps cannot read <code>process.env</code>.</li>
-          <li>Set to <code>false</code> for a stricter lockdown when you do not load such libraries (disables string codegen in the sandbox).</li>
+          <li><strong>Default:</strong> <code>[]</code> (empty — opt in when you need shared project libs).</li>
+          <li>Ordered list of <strong>project-relative</strong> directories used as extra sandboxed <code>require</code> roots (server-wide, all apps).</li>
+          <li>Resolved at config load against the project root (directory of <code>gingee.json</code> / <code>process.cwd()</code>). <strong>Absolute paths are rejected in v1.</strong> Roots must be <strong>strict descendants</strong> of the project root (not <code>.</code> / the project root itself).</li>
+          <li>Lookup is <strong><code>.js</code> only</strong> (no <code>index.js</code>): <code>require('tax')</code> → <code>{root}/tax.js</code>; <code>require('billing/invoice')</code> → <code>{root}/billing/invoice.js</code>. First configured root that contains the file wins.</li>
+          <li>Load style: <strong><code>runInGBox</code></strong> (same sandbox as app box scripts), <strong>not</strong> host <code>require</code>. Engine <code>modules/</code> always wins over local roots for the same bare name (no shadowing of platform modules).</li>
+          <li>Relative <code>require('./x')</code> from a file under a local root is jailed to <strong>that root</strong>; from an app box script it remains jailed to the app box.</li>
+          <li>These are <strong>host/project libraries</strong>, not part of a distributable <code>.gin</code> app package. Document and deploy them with the project, not inside app boxes.</li>
+          <li>With <strong><code>cache.server.enabled</code></strong>, local_modules files are included in the per-app <strong>sandboxed instance cache</strong> (same as box scripts). Instances are keyed by <strong>app name + absolute path</strong> so two apps never share mutable exports for the same file. <code>reloadApp</code> clears that app’s instances.</li>
+          <li>Samples in this repo: <strong><code>web/appsandboxtest/</code></strong> (<code>sandbox_kit</code>), <strong><code>web/perftest/</code></strong> (<code>mylib/store</code> — instance-cache fixture).</li>
+          <li>New projects from <strong><code>gingee-cli init</code></strong> ship <code>local_modules: []</code> via the sanitized template synced on engine <code>npm run build</code>.</li>
+          <li>Example when Gingee is installed via npm under <code>node_modules</code> and you share helpers across apps:</li>
         </ul>
       </li>
-      <li><strong>Example (stricter):</strong></li>
     </ul>
     <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token property">"box"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="2">  <span class="token property">"allowed_modules"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="3">  <span class="token property">"allow_code_generation"</span><span class="token operator">:</span> <span class="token boolean">false</span>
-</span><span class="code-line line-number" line="4"><span class="token punctuation">}</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"local_modules"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"./local_modules"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="4">  <span class="token property">"allow_dynamic_code"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+</span><span class="code-line line-number" line="5"><span class="token punctuation">}</span>
 </span></code><div onclick="copied(this)" data-code="&#x22;box&#x22;: {
   &#x22;allowed_modules&#x22;: [],
-  &#x22;allow_code_generation&#x22;: false
+  &#x22;local_modules&#x22;: [&#x22;./local_modules&#x22;],
+  &#x22;allow_dynamic_code&#x22;: false
+}
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+    <pre class="language-text"><code class="language-text code-highlight"><span class="code-line line-number" line="1">my-project/
+</span><span class="code-line line-number" line="2">  gingee.json
+</span><span class="code-line line-number" line="3">  node_modules/gingee/     ← engine modules/
+</span><span class="code-line line-number" line="4">  local_modules/
+</span><span class="code-line line-number" line="5">    tax.js                 ← require('tax')
+</span><span class="code-line line-number" line="6">    billing/
+</span><span class="code-line line-number" line="7">      invoice.js           ← require('billing/invoice')
+</span><span class="code-line line-number" line="8">  web/&#x3C;app>/box/           ← app scripts
+</span></code><div onclick="copied(this)" data-code="my-project/
+  gingee.json
+  node_modules/gingee/     ← engine modules/
+  local_modules/
+    tax.js                 ← require(&#x27;tax&#x27;)
+    billing/
+      invoice.js           ← require(&#x27;billing/invoice&#x27;)
+  web/<app>/box/           ← app scripts
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+    <ul>
+      <li><strong><code>allow_dynamic_code</code></strong> (boolean, optional):
+        <ul>
+          <li><strong>Default:</strong> <code>true</code> (Instant Time to Joy — many UMD/minified libs such as Handlebars need <code>new Function</code> at load time).</li>
+          <li>When <code>true</code>, string <code>eval</code> / <code>Function</code> work <strong>inside the app vm only</strong>. Host <strong><code>process</code> remains unavailable</strong>; apps cannot read <code>process.env</code>.</li>
+          <li>Set to <code>false</code> as a <strong>server default</strong> (recommended for production lockdown).</li>
+          <li><strong>App-level override:</strong> each app may set <code>allow_dynamic_code</code> in <strong><code>app.json</code></strong> (or nested <code>box.allow_dynamic_code</code>). An <strong>explicit app value wins</strong> over the server default — so an app can <strong>opt in</strong> (<code>true</code>) for Handlebars/UMD, or <strong>opt out</strong> (<code>false</code>) even when the server default is <code>true</code>.</li>
+          <li><strong>Legacy:</strong> <code>allow_code_generation</code> is still honored if <code>allow_dynamic_code</code> is unset.</li>
+        </ul>
+      </li>
+      <li><strong>Example (production default off; only needed apps opt in):</strong></li>
+    </ul>
+    <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token property">"box"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="2">  <span class="token property">"allowed_modules"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"local_modules"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="4">  <span class="token property">"allow_dynamic_code"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+</span><span class="code-line line-number" line="5"><span class="token punctuation">}</span>
+</span></code><div onclick="copied(this)" data-code="&#x22;box&#x22;: {
+  &#x22;allowed_modules&#x22;: [],
+  &#x22;local_modules&#x22;: [],
+  &#x22;allow_dynamic_code&#x22;: false
+}
+" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+    <pre class="language-json"><code class="language-json code-highlight"><span class="code-line line-number" line="1"><span class="token comment">// web/tests/box/app.json (needs external UMD lib)</span>
+</span><span class="code-line line-number" line="2"><span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="3">  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"tests"</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="4">  <span class="token property">"allow_dynamic_code"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+</span><span class="code-line line-number" line="5"><span class="token punctuation">}</span>
+</span></code><div onclick="copied(this)" data-code="// web/tests/box/app.json (needs external UMD lib)
+{
+  &#x22;name&#x22;: &#x22;tests&#x22;,
+  &#x22;allow_dynamic_code&#x22;: true
 }
 " class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
     <h3 id="default_app"><a class="anchor" aria-hidden="true" tabindex="-1" href="#default_app"><span class="octicon octicon-link"></span></a>default_app</h3>
