@@ -108,14 +108,14 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       <li>
         <p>
           <strong>Secure Sandbox Execution</strong>
-          Every server script runs in a secure, isolated environment. This prevents common vulnerabilities like path traversal and protects the main server process from errors or crashes in application code. When <code>app.json</code> → <code>cache.server.enabled</code> is true, Gingee reuses sandboxed <strong>module instances</strong> (box scripts and <code>box.local_modules</code>) across requests—still invoking the exported handler each time—while preserving the same permission and path jail rules. Disable server cache or use <code>no_cache_regex</code> for live-edit paths; <code>reloadApp</code> drops the instance cache for that app. Bare <code>$g</code> in box code is request-local (ALS); keep <code>gingee(async ($g) => …)</code> on entries.
+          Every server script runs in a secure, isolated environment. This prevents common vulnerabilities like path traversal and protects the main server process from errors or crashes in application code. When <code>app.json</code> → <code>cache.server.enabled</code> is true, Gingee reuses sandboxed <strong>module instances</strong> (box scripts and <code>box.local_modules</code>) across requests—still invoking the exported handler each time—while preserving the same permission and path jail rules. Disable server cache or use <code>no_cache_regex</code> for live-edit paths; <code>reloadApp</code> drops the instance cache for that app. Bare <code>$g</code> in box code is request-local (ALS); keep <code>gingee(async ($g) => …)</code> on entries. Use <strong><code>$g.locals</code></strong> for writable per-request scratch (not assignments onto <code>$g</code> itself).
           <strong>Errors:</strong> the HTTP request path catches failures of the <strong>handler promise</strong> (<code>await script()</code> / <code>await gingee(...)</code>) and returns <strong>500</strong> when headers are not yet sent. <strong>Detached</strong> async work that is not awaited is <strong>not</strong> part of that promise: an unhandled rejection is logged (<code>[unhandledRejection]</code>) and the <strong>process keeps running</strong>. Sync <strong><code>uncaughtException</code></strong> is logged (<code>[uncaughtException]</code>, optional ALS app name), the engine attempts <strong>graceful shutdown</strong>, then <strong><code>process.exit(1)</code></strong> — do not assume the process is healthy after a sync fatal. Prefer <code>await</code>, <code>.catch</code>, or the <strong><code>queue</code></strong> module for background side effects. See <a href="./threat-model.md">Threat Model</a> → <em>How not to take down the node</em>.
         </p>
       </li>
       <li>
         <p>
           <strong>Response compression</strong>
-          With <code>gingee.json</code> → <code>content_encoding.enabled</code>, static files may be served from a <strong>pre-gzipped</strong> server-cache entry, and <code>$g.response.send</code> gzip when the raw body is at least <code>content_encoding.size_threshold</code> bytes (default <strong>1024</strong>) and the client sends <code>Accept-Encoding: gzip</code>.
+          With <code>gingee.json</code> → <code>content_encoding.enabled</code>, static files may be served from a <strong>pre-gzipped</strong> server-cache entry, and <code>$g.response.send</code> gzip when the raw body is at least <code>content_encoding.size_threshold</code> bytes (default <strong>1024</strong>) and the client sends <code>Accept-Encoding: gzip</code>. When <code>cache.client</code> is enabled, static responses include <strong>ETag</strong> / <strong>Last-Modified</strong> and support <strong>304</strong> revalidation (alongside long <code>max-age</code>); <code>no_cache_regex</code> still forces <code>no-store</code>.
         </p>
       </li>
       <li>
@@ -182,6 +182,12 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         <p>
           <strong>Outbound Messaging (<code>messaging</code> Module)</strong>
           Send SMS/MMS/WhatsApp through a provider adapter (Twilio in v1, plus <code>mock</code> and <code>console</code> loggers for local dev). Set <code>channel: 'whatsapp'</code> for WhatsApp (optional <code>whatsapp_from</code> in config); use <code>contentSid</code> / <code>contentVariables</code> for Twilio Content Templates. Config is a single object in <code>app.json</code> (optional defaults in <code>gingee.json</code>). Apps call <code>messaging.send(message)</code> or <code>messaging.sendWithConfig(runtimeConfig, message)</code> for a one-transaction override. Requires the <code>messaging</code> permission. Sample app: <strong><code>ginbon</code></strong> (<code>/ginbon/</code> — contacts, templates, compose with SMS/MMS/WhatsApp, history).
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Engine cache invalidate (<code>cache.invalidateSysCache</code>)</strong>
+          Non-privileged apps with the <strong><code>cache</code></strong> permission can drop static / transpile / instance caches for path prefixes under their own web/box (after unzip/codegen) without <code>platform.reloadApp</code>. From an isolation worker the call is forwarded to the master (static cache + fan-out to all workers). Does not reinit messaging/email/ai. Schedule-only refresh: <code>require('scheduler').rebind(names?)</code> with the <strong><code>scheduler</code></strong> permission.
         </p>
       </li>
       <li>
@@ -283,7 +289,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
     <ul>
       <li>
         <strong><code>gingee</code></strong>
-        The core middleware and context provider. Entry scripts use <code>await gingee(async ($g) => { … })</code>. Inside that handler, bare <code>$g</code> / <code>globalThis.$g</code> is also available to <code>require</code>d box modules (live, request-local Proxy). Handles automatic request body parsing.
+        The core middleware and context provider. Entry scripts use <code>await gingee(async ($g) => { … })</code>. Inside that handler, bare <code>$g</code> / <code>globalThis.$g</code> is also available to <code>require</code>d box modules (live, request-local Proxy). <strong><code>$g.locals</code></strong> is a fresh writable object every request for app scratch state. Sandbox <strong><code>console.*</code></strong> maps to the app Winston logger (<code>box/logs</code>); prefer <strong><code>$g.log</code></strong>. Handles automatic request body parsing.
       </li>
       <li>
         <strong><code>cache</code></strong>
@@ -310,7 +316,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
       </li>
       <li>
         <strong><code>fs</code></strong>
-        A secure, virtualized filesystem wrapper. Jails all file and folder operations to an app's private <code>box</code> or public <code>web</code> scope, preventing path traversal attacks. Includes read/write helpers, <strong><code>readJSON</code> / <code>writeJSON</code></strong> (sync and async), directory listing (<code>readdir</code>, <code>listFiles</code>, <code>listDirs</code>), recursive <code>walk</code> (<code>includeDirs</code> / <code>maxDepth</code>), and <code>stat</code>. Relative paths (no leading <code>/</code>) resolve to the executing gbox script directory; leading <code>/</code> is scope-root.
+        A secure, virtualized filesystem wrapper. Jails all file and folder operations to an app's private <code>box</code> or public <code>web</code> scope, preventing path traversal attacks. Includes read/write helpers, <strong><code>readJSON</code> / <code>writeJSON</code></strong> (sync and async), directory listing (<code>readdir</code>, <code>listFiles</code>, <code>listDirs</code>), recursive <code>walk</code> (<code>includeDirs</code> / <code>maxDepth</code>; results relative to the walked folder), and <code>stat</code>. Relative paths (no leading <code>/</code>) resolve to the executing gbox script directory; leading <code>/</code> is scope-root.
       </li>
       <li>
         <strong><code>httpclient</code></strong>

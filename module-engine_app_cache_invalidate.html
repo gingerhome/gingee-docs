@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>engine/boot - Documentation</title>
+    <title>engine/app_cache_invalidate - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">engine/boot</h1>
+    <h1 class="page-title">engine/app_cache_invalidate</h1>
     
 
     
@@ -58,7 +58,8 @@
         <div class="container-overview">
         
             
-                <div class="description usertext">Full server startup sequence (services, apps, HTTP).Engine-internal — not for sandboxed app require.</div>
+                <div class="description usertext">Prefix-scoped invalidation of static file cache and gbox
+transpile/instance caches for the calling app. Engine-internal.</div>
             
 
             
@@ -70,7 +71,8 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li>Full server startup sequence (services, apps, HTTP).Engine-internal — not for sandboxed app require.</li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li>Prefix-scoped invalidation of static file cache and gbox
+transpile/instance caches for the calling app. Engine-internal.</li></ul></dd>
     
 
     
@@ -162,7 +164,7 @@
 
     
 
-    <h4 class="name" id="~startServer"><span class="type-signature type-signature-async, inner">(async, inner) </span>startServer<span class="signature">(options)</span><span class="type-signature"> &rarr; {Promise.&lt;{apps: object, logger: object}>}</span></h4>
+    <h4 class="name" id="~applyInvalidateOnMaster"><span class="type-signature type-signature-async, inner">(async, inner) </span>applyInvalidateOnMaster<span class="signature">(appName, staticAbsPrefixes, scriptAbsPrefixes)</span><span class="type-signature"> &rarr; {Promise.&lt;{static: number, scripts: {transpile: number, instance: number}}>}</span></h4>
 
     
 
@@ -172,7 +174,8 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li>Boot the Gingee control plane and start listening.</li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li>Master-side apply: static provider clear + local script caches + broadcast to workers.
+Prefixes must already be absolute jailed paths.</li></ul></dd>
     
 
     
@@ -245,74 +248,7 @@
 
         <tr>
             
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>config</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>webPath</code></td>
+                <td class="name"><code>appName</code></td>
             
 
             <td class="type">
@@ -336,13 +272,13 @@
 
         <tr>
             
-                <td class="name"><code>projectRoot</code></td>
+                <td class="name"><code>staticAbsPrefixes</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Array.&lt;string></span>
 
 
 
@@ -360,13 +296,13 @@
 
         <tr>
             
-                <td class="name"><code>engineRoot</code></td>
+                <td class="name"><code>scriptAbsPrefixes</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Array.&lt;string></span>
 
 
 
@@ -378,37 +314,6 @@
             
 
             <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>requestHandler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">(req, res, apps, config, logger) => ...</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
         </tr>
 
     
@@ -441,7 +346,530 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;{apps: object, logger: object}></span>
+<span class="param-type">Promise.&lt;{static: number, scripts: {transpile: number, instance: number}}></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~invalidateScriptPrefixesLocal"><span class="type-signature type-signature-inner">(inner) </span>invalidateScriptPrefixesLocal<span class="signature">(appName, absPrefixes)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Clear transpile + instance caches for prefixes on this process.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>appName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>absPrefixes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~invalidateStaticPrefixes"><span class="type-signature type-signature-async, inner">(async, inner) </span>invalidateStaticPrefixes<span class="signature">(absPrefixes)</span><span class="type-signature"> &rarr; {Promise.&lt;number>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Clear static:${abs}… keys for each prefix via the cache provider.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>absPrefixes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    number of prefixes cleared
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;number></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~resolvePrefixes"><span class="type-signature type-signature-inner">(inner) </span>resolvePrefixes<span class="signature">(scope, prefixes, app)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Resolve user path prefixes to absolute paths using fs BOX/WEB rules.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">SCOPES.BOX or SCOPES.WEB</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>prefixes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>app</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
 
 
 

@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>engine/boot - Documentation</title>
+    <title>engine/sandbox_console - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">engine/boot</h1>
+    <h1 class="page-title">engine/sandbox_console</h1>
     
 
     
@@ -58,7 +58,8 @@
         <div class="container-overview">
         
             
-                <div class="description usertext">Full server startup sequence (services, apps, HTTP).Engine-internal — not for sandboxed app require.</div>
+                <div class="description usertext">Console facade for gbox that forwards to a Winston-like app logger.
+Engine-internal.</div>
             
 
             
@@ -70,7 +71,8 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li>Full server startup sequence (services, apps, HTTP).Engine-internal — not for sandboxed app require.</li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li>Console facade for gbox that forwards to a Winston-like app logger.
+Engine-internal.</li></ul></dd>
     
 
     
@@ -162,7 +164,7 @@
 
     
 
-    <h4 class="name" id="~startServer"><span class="type-signature type-signature-async, inner">(async, inner) </span>startServer<span class="signature">(options)</span><span class="type-signature"> &rarr; {Promise.&lt;{apps: object, logger: object}>}</span></h4>
+    <h4 class="name" id="~createSandboxConsole"><span class="type-signature type-signature-inner">(inner) </span>createSandboxConsole<span class="signature">(logger)</span><span class="type-signature"> &rarr; {object}</span></h4>
 
     
 
@@ -170,9 +172,6 @@
 
 
 <dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li>Boot the Gingee control plane and start listening.</li></ul></dd>
     
 
     
@@ -245,7 +244,7 @@
 
         <tr>
             
-                <td class="name"><code>options</code></td>
+                <td class="name"><code>logger</code></td>
             
 
             <td class="type">
@@ -262,153 +261,7 @@
 
             
 
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>config</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>webPath</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>projectRoot</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>engineRoot</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>requestHandler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">(req, res, apps, config, logger) => ...</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last">Winston app logger or compatible { info, warn, error, debug }</td>
         </tr>
 
     
@@ -433,6 +286,10 @@
 <h5 class="h5-returns">Returns:</h5>
 
         
+<div class="param-desc">
+    console-like object for the sandbox
+</div>
+
 
 
 <dl class="param-type">
@@ -441,7 +298,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;{apps: object, logger: object}></span>
+<span class="param-type">object</span>
 
 
 

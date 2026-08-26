@@ -197,8 +197,8 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
         <tr>
           <td align="left"><strong>cache</strong></td>
-          <td align="left">Allows the app to use the caching service for storing and retrieving data.</td>
-          <td align="left"><strong>High.</strong> Grants access to the centralized cache service. Cache access is isolated for app specific data.</td>
+          <td align="left">Allows the app to use the caching service for storing and retrieving data, and to call <code>cache.invalidateSysCache</code> to drop engine static/transpile/instance caches for path prefixes under this app (after runtime file replaces; from isolation workers the call is forwarded to the master).</td>
+          <td align="left"><strong>High.</strong> Grants access to the centralized cache service and engine cache invalidation for this app’s WEB/BOX prefixes.</td>
         </tr>
         <tr>
           <td align="left"><strong>db</strong></td>
@@ -232,8 +232,8 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
         <tr>
           <td align="left"><strong>scheduler</strong></td>
-          <td align="left">Allows the app to register CRON jobs declared in <code>app.json</code> → <code>schedules</code> (script under <code>box/</code>, outbound URL, or <strong>queue</strong> job name). Jobs only fire when this node has <code>scheduler.enabled: true</code> in <code>gingee.json</code> (optional multi-node Redis coordination; Glade <strong>Run now</strong> can force a run).</td>
-          <td align="left"><strong>High.</strong> The app can wake itself on a timer to run privileged sandbox code, enqueue queue jobs, or (with <code>httpclient</code>) call external URLs unattended.</td>
+          <td align="left">Allows the app to register CRON jobs declared in <code>app.json</code> → <code>schedules</code>, and to <code>require('scheduler').rebind(names?)</code> to refresh this app’s jobs from disk without <code>platform.reloadApp</code>. Jobs only fire when <code>scheduler.enabled: true</code>.</td>
+          <td align="left"><strong>High.</strong> The app can wake itself on a timer and rebind its own schedules. Sandbox API is <strong><code>rebind</code> only</strong> (not cross-app unregister).</td>
         </tr>
         <tr>
           <td align="left"><strong>httpclient</strong></td>
@@ -301,7 +301,7 @@ svg { z-index: 99; position: fixed; border: 0px; top: 0px; right: 0; }
         </tr>
       </tbody>
     </table>
-    <p><strong>Never overridable:</strong> restricted modules (<code>platform</code>, <code>gingee</code>, <code>scheduler</code>, …), <code>engine/*</code>, and forbidden host builtins (<code>child_process</code>, <code>node:fs</code>, …).</p>
+    <p><strong>Never overridable:</strong> restricted modules (<code>platform</code>, <code>gingee</code>, …), <code>engine/*</code>, and forbidden host builtins (<code>child_process</code>, <code>node:fs</code>, …). (<code>scheduler</code> is protected — apps with the permission may <code>require('scheduler')</code> for <code>rebind</code> only.)</p>
     <h3 id="api"><a class="anchor" aria-hidden="true" tabindex="-1" href="#api"><span class="octicon octicon-link"></span></a>API</h3>
     <pre class="language-javascript"><code class="language-javascript code-highlight"><span class="code-line line-number" line="1"><span class="token comment">// Replacement script is always box-relative (app-defined layout)</span>
 </span><span class="code-line line-number" line="2">$g<span class="token punctuation">.</span><span class="token method function property-access">overrideModule</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">,</span> <span class="token string">"library/fswrapper.js"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
